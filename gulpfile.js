@@ -5,7 +5,8 @@ var gulp = require("gulp"),
     stream = browserSync.stream,
     concat = require("gulp-concat"),
     pug = require("gulp-pug"),
-    rename = require("gulp-rename");
+    rename = require("gulp-rename"),
+    plumber = require("gulp-plumber");
 
 // 合并库文件
 gulp.task("lib", function() {
@@ -24,7 +25,9 @@ gulp.task("lib", function() {
 // 将pug文件转换为html文件
 gulp.task("html", function() {
     gulp.src("index.pug")
+        .pipe(plumber())
         .pipe(pug({ pretty: true }))
+        .pipe(plumber.stop())
         .pipe(gulp.dest("."))
         .pipe(stream());
 });

@@ -10,7 +10,161 @@
   </head>
   <body>
     <h1 class="text-primary">bootstrap 学习笔记</h1>
-    <h2 class="text-primary">2.文本</h2>
+    <h2 class="text-primary">3. 表单</h2>
+    <h3 class="text-primary">3.1 表单基础</h3>
+    <p>表单中常见的元素包括：</p>
+    <ul class="list-inline">
+      <li> <strong>文本输入框</strong></li>
+      <li> <strong>下拉选择框</strong></li>
+      <li> <strong>单选按钮</strong></li>
+      <li> <strong>复选按钮</strong></li>
+      <li> <strong>文本域</strong></li>
+      <li> <strong>按钮</strong></li>
+    </ul>
+    <p class="lead">对于&lt;fieldset&gt;，&lt;legend&gt;，&lt;lable&gt;元素，bootstrap对margin，padding和border做了细化设置。</p>
+    <p class="lead"> 
+      对于&lt;input&gt;，&lt;select&gt;，&lt;textarea&gt;等元素，
+      如果加上类名<kbd>.form-control</kbd>就会产生定制效果：
+    </p>
+    <ol> 
+      <li>宽度变为100%</li>
+      <li>设置一个浅灰色（#ccc）边框</li>
+      <li>具有4px的圆角</li>
+      <li>设置阴影效果，并且元素得到焦点时，阴影和边框效果都有所变化</li>
+      <li>placeholder 的颜色为#999</li>
+    </ol>
+        <form role="form">
+          <div class="form-group">
+            <label for="email">邮箱：</label>
+            <input class="form-control" id="email" type="email" placeholder="请输入邮箱地址"/>
+          </div>
+          <div class="form-group">
+            <label for="password">密码：</label>
+            <input class="form-control" id="password" type="password"/>
+          </div>
+          <div class="checkbox">
+            <label> 
+              <input type="checkbox"/>记住密码
+            </label>
+          </div>
+          <button class="btn btn-default" type="submit">进入邮箱</button>
+        </form>
+    <h3 class="text-primary">3.2 水平表单</h3>
+    <p class="lead">bootstrap表单默认为垂直风格，要实现水平需满足以下条件:</p>
+    <ol>
+      <li> <strong>
+           在&lt;form&gt;元素使用类<kbd>.form-horizontal</kbd></strong></li>
+      <li> <strong>配合bootstrap网格系统（后面有介绍）</strong></li>
+    </ol>
+    <p class="lead">
+       添加类<kbd>.form-horizontal</kbd>有以下效果</p>
+    <ol> 
+      <li> <strong>设置表单的padding和margin值</strong></li>
+      <li><strong>
+           改变<kbd>.form-group</kbd>的表现形式，类似于网格系统的"row"</strong></li>
+      <li> <strong>只有当屏幕宽度大于768px时才能达到此效果</strong></li>
+    </ol>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="email">邮箱：</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="email" type="email" placeholder="请输入邮箱地址"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="password">密码：</label>
+        <div class="col-sm-10">
+          <input class="form-control" id="password" type="password"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label> 
+              <input type="checkbox"/>记住密码
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button class="btn btn-default" type="submit">进入邮箱</button>
+        </div>
+      </div>
+    </form>
+    <h3 class="text-primary">3.3 内联表单</h3>
+    <p class="lead"> 
+      效果：表单所有控件都在一行内显示。
+      类：<kbd>.form-inline</kbd>
+    </p>
+    <p class="text-muted">注意</p>
+    <ol> 
+      <li>
+         &lt;lable&gt;要放置在<kbd>.form-group</kbd>内</li>
+      <li>
+         &lt;lable&gt;元素加上类<kbd>.sr-only</kbd>不会显示，放置的目的是方便<strong>屏幕阅读器。</strong></li>
+    </ol>
+    <form class="form-inline" role="form">
+      <div class="form-group">
+        <label class="sr-only" for="email">邮箱：</label>
+        <input class="form-control" id="email" type="email" placeholder="请输入邮箱地址"/>
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="password">密码：</label>
+        <input class="form-control" id="password" type="password" placeholder="请输入密码"/>
+      </div>
+      <div class="checkbox">
+        <label> 
+          <input type="checkbox"/>记住密码
+        </label>
+      </div>
+      <button class="btn btn-default" type="submit">进入邮箱</button>
+    </form>
+    <h3 class="text-primary">3.3 表单控件（输入框 input）</h3>
+    <p class="lead">需要指定input元素的type类型，如果没有，不能得到正确样式。</p>
+    <p class="lead">
+       为了让控件在各种表单风格样式不出错，需要添加类名<kbd>.form-control</kbd>。</p>
+    <form role="form">
+      <div class="form-group">
+        <input class="form-control" type="emil" placeholder="Enter emal"/>
+      </div>
+    </form>
+    <h3 class="text-primary">3.5 表单控件（下拉选择框select）</h3>
+    <p class="lead">
+       &lt;select&gt;添加类名<kbd>.form-control</kbd>包裹在类为<kbd>.form-group</kbd>
+      的&lt;div&gt;中。
+      multiple选项保持不变，自定义。
+    </p>
+    <form rol="form">
+      <div class="form-group">
+        <select class="form-control">
+          <option>篮球</option>
+          <option>足球</option>
+          <option>乒乓球</option>
+          <option>羽毛球</option>
+        </select>
+      </div>
+    </form>
+    <form rol="form">
+      <div class="form-group">
+        <select class="form-control" multiple="multiple">
+          <option>篮球</option>
+          <option>足球</option>
+          <option>乒乓球</option>
+          <option>羽毛球</option>
+        </select>
+      </div>
+    </form>
+    <h3 class="text-primary">3.6 表单控件（文本域textarea）</h3>
+    <p class="lead"> 
+      设置rows可定义高度，设置cols可定义宽度。
+      不过如果在&lt;textarea&gt;添加类<kbd>.form-control</kbd>则无序设置cols，bootstrap将其宽度设置为<strong>100%</strong>或<strong>auto</strong>
+    </p>
+    <form role="form">
+      <textarea class="form-control" cols="3" rows="2"></textarea>
+    </form>
+    <hr/>
+    <h2 class="text-primary">2.排版</h2>
     <h3 class="text-primary">2.1 标题</h3>
     <ol> 
       <li>不同级别字体大小， h1=36px, h2=30px, h3=24px, h4=18px, h5=14px, h6=12px。</li>
