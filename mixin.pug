@@ -1,0 +1,13 @@
+mixin table(type, heads, bodies)
+	table(class=type)
+		thead
+			tr(class=heads[0])
+				each head in heads.slice(1)
+					th= head
+		tbody
+			each body in bodies
+				tr(class=body[0]) 
+					each item in body.slice(1)
+						td= item 
+
+//- +table("table", ["", "表格标题", "表格标题", "表格标题"], [["", "表格单元格", "表格单元格", "表格单元格"],["", "表格单元格", "表格单元格", "表格单元格"]])
