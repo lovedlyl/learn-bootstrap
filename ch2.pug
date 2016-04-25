@@ -53,7 +53,7 @@ ol
 		|字体为"Helvetica Neue", Helvetica, Arial, sans-serif;(font-family)，
 		|这些属性都设置在body元素上，并且他们都有继承性，包括p元素，所以在不同项目中自行重置。
 	p p元素设置有外边距，默认为行高，定制距离可以在编译版中的variables.scss中修改
-	p 这是一个段落
+p 我是一个段落
 
 //- 
 h3.text-primary 2.4 强调内容
@@ -233,26 +233,27 @@ ol
 	li &lt;pre&gt;:一般针对多行代码，即成块代码
 	li &lt;kbd&gt;: 表示用户需要键盘输入的内容
 p code风格：
-div
-	|bootstrap有种代码显示风格： 
+div 
 	code &lt;code&gt;
 	|，
 	code &lt;pre&gt;
 	|，
 	code &lt;kbd&gt;
+div
 	|pre风格：
 	pre
 		|(defun fact (n)
 		|	if(n<=1)
 		|		1
 		|		(* n (fact (- n 1))))
+
+div 
 	|kbd风格：
-	div 
-		|请输入
-		kbd ctrl+c
-		|复制代码
-		kbd ctrl+v
-		|粘贴代码
+	|请输入
+	kbd ctrl+c
+	|复制代码
+	kbd ctrl+v
+	|粘贴代码
 
 h3.text-primary 2.16 代码2
 p.lead 
@@ -385,14 +386,15 @@ p.lead
 	span.text-muted 实现原理：
 	|将具有类
 	kbd .table
-	|(.table-bordered...)
-	|的表格至于类为
+	|(.table-bordered...)	
+	|的表格置于类为
 	kbd .table-responsive
 	|的&lt;div&gt;元素中。
 	span.text-muted 效果：
 	|当屏幕宽度小于786px时，表格底部出现滚动条，大于时滚动条消失。
 .table-responsive
-	+table("table table-responsive", ["", "表格标题", "表格标题", "表格标题"], 
+	+table("table table-responsive",
+	["", "表格标题", "表格标题", "表格标题"], 
 	[["", "表格单元格", "表格单元格", "表格单元格"],
 	["", "表格单元格", "表格单元格", "表格单元格"],
 	["", "表格单元格", "表格单元格", "表格单元格"],
