@@ -13,22 +13,22 @@ gulp.task("lib", function() {
     // 样式
     gulp.src(["bower_components/bootstrap/dist/css/bootstrap.min.css"])
         .pipe(concat("bootstrap.css"))
-        .pipe(gulp.dest("."));
+        .pipe(gulp.dest("dist/styles"));
     // 脚本
     gulp.src(["bower_components/jquery/dist/jquery.min.js",
             "bower_components/bootstrap/dist/js/bootstrap.min.js"
         ])
         .pipe(concat("bootstrap.js"))
-        .pipe(gulp.dest("."))
+        .pipe(gulp.dest("dist/scripts"))
 });
 
 // 将pug文件转换为html文件
-gulp.task("html", function() {
-    gulp.src("index.pug")
+gulp.task("convertPug", function() {
+    gulp.src(["src/index.pug", "src/ch*.pug"])
         .pipe(plumber())
         .pipe(pug({ pretty: true }))
         .pipe(plumber.stop())
-        .pipe(gulp.dest("."))
+        .pipe(gulp.dest("dist"))
         .pipe(stream());
 });
 
@@ -36,9 +36,9 @@ gulp.task("html", function() {
 
 gulp.task("default", function() {
     browserSync.init({
-        server: "./"
+        server: "dist"
     });
-
-    gulp.watch(["*.pug", "index.html"], ["html", reload]);
+    gulp.watch("src/*.pug", ["convertPug"]);
+    gulp.watch("dist/*.html").on("change", reload);
 
 });

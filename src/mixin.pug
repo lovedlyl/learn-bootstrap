@@ -1,0 +1,28 @@
+mixin table(type, heads, bodies)
+	table(class=type)
+		thead
+			tr(class=heads[0])
+				each head in heads.slice(1)
+					th= head
+		tbody
+			each body in bodies
+				tr(class=body[0]) 
+					each item in body.slice(1)
+						td= item 
+
+//- +table("table", ["", "表格标题", "表格标题", "表格标题"], [["", "表格单元格", "表格单元格", "表格单元格"],["", "表格单元格", "表格单元格", "表格单元格"]])
+
+//- 方便写各种类型的form
+mixin form-example(formClass)
+	form(role="form", class=formClass)
+		.form-group
+			label(for="email") 邮箱：
+			input#email.form-control(type="email", placeholder="请输入邮箱地址")
+		.form-group
+			label(for="password") 密码：
+			input#password.form-control(type="password")
+		.checkbox
+			label 
+				input(type="checkbox") 
+				|记住密码
+		button.btn.btn-default(type="submit") 进入邮箱
