@@ -1,0 +1,59 @@
+extends layout
+
+block title 
+	title 第五章 图像
+
+block content
+	h2.text-primary 第五章 图像
+
+	h3.text-primary 5.1 图片
+
+	p bootstrap中的图片样式有以下几种风格：
+	ol 
+		li 
+			code .img-responsive
+			|响应式图片，主要针对响应式设计
+		li 
+			code .img-rounded
+			|圆角图片
+		li 
+			code .img-circle
+			|圆形图片
+		li 
+			code .img-thumbnail
+			|缩略图
+	.container
+		.row
+			each item in [{name: "默认图片", cat: "img"}, {name: "圆角图片",  cat: "img-rounded"}, {name: "圆形图片", cat: "img-circle"}, {name: "缩略图", cat: "img-thumbnail"}, {name: "响应式图片", cat: "img-responsive"}]
+				.col-sm-2 
+					img(class=item.cat, src="images/140x140.png")
+					div #{item.name}
+	p 
+		|设计图片大小：
+		br 
+		|由于没有对图片大小作限制，所以在实际使用时需要通过其它方式改变图片大小，比如设置容器大小（？）。
+		span.text-warning 不可通过css直接改变图片大小，这样就没有响应效果
+		|。
+
+	//- 
+	h3.text-primary 5.2 图标
+	p 
+		|bootstrap中的小图标通过css3的
+		code @font-face
+		|制作。来自
+		strong 
+			a(href="http://glyphicons.com/", target="_blank") glyphicons.com
+		|。可免费使用。
+	img(src="images/icons.jpg").img-responsive
+	p 
+		span.text-muted 任何内联元素都可以用来制作小图标。
+		|使用时需要添加类
+		code .glyphicon
+		|，再根据需要添加特定形状的类。比如
+		code .glyphicon-search
+		|：
+	span.glyphicon.glyphicon-search
+	span.glyphicon.glyphicon-cloud
+	span.glyphicon.glyphicon-asterisk
+	span.glyphicon.glyphicon-heart 
+

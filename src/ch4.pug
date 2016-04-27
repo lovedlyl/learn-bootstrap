@@ -1,0 +1,295 @@
+extends layout
+
+block title
+	title 第四章 按钮
+
+block content
+	//- 
+	p 实现按钮通常有如下方法：
+	ol
+		li input[type="submit"]
+		li input[type="button"]
+		li input[type="reset"]
+	p.text-muted 
+		|不过bootstrap中实现按钮都是采用
+		code &lt;button&gt;
+		|来实现。
+
+	//- 
+	h3.text-primary 3.1 基本按钮
+	p 
+		|只需在button元素添加类
+		code .btn
+		|就可实现基本按钮：
+	button(type="button").btn 我是一个基本按钮
+
+	//- 
+	h3.text-primary 3.2 默认按钮
+	p 
+		|在
+		code .btn 
+		|的基础上添加类
+		code .btn-default
+		|就可实现默认按钮。
+		br 
+		|改变了背景颜色和文本颜色
+	button(type="button").btn.btn-default 我是一个默认按钮
+
+	//- 
+	h3.text-primary 3.3 按钮的多标签支持
+	p 可以使用任何元素制作按钮风格，只需为其添加与button制作按钮时相同的类即可。
+	p.text-danger 
+		|不过为了兼容考虑，强烈建议只使用
+		strong button
+		|和
+		strong a
+		|标签制作按钮。
+	button(type="button").btn.btn-default button标签按钮
+	input(type="submit", value="input标签按钮").btn.btn-default
+	a(href="#").btn.btn-default a标签按钮 
+	span.btn.btn-default span标签按钮
+	.btn.btn-default div标签按钮
+
+	//- 
+	h3.text-primary 3.4 按钮大小
+	p 
+		|bootstrap通过改变padding，line-height，font-size和border-radius实现对按钮大小控制。
+		|可以在
+		code .btn 
+		|的基础上添加3种类实现对按钮大小的控制
+	ol 
+		li 
+			code .btn-lg
+			|：变大
+		li 
+			code ...
+			|：正常
+		li 
+			code .btn-sm 
+			|：变小
+		li 
+			code .btn-xs 
+			|：超小
+	button(type="button").btn.btn-primary.btn-lg 大型按钮.btn-lg
+	button(type="button").btn.btn-primary 正常按钮
+	button(type="button").btn.btn-primary.btn-sm 小型按钮.btn-sm
+	button(type="button").btn.btn-primary.btn-xs 超小型按钮.btn-xs  
+
+	//- 
+	h3.text-primary 3.5 块状按钮
+	p 
+		|如果需要按钮块状显示，并且充满整个父容器（width:100%），添加类名
+		code .btn-block
+		|。
+	button(type="button").btn.btn-primary.btn-block.btn-lg 大型按钮.btn-lg
+	button(type="button").btn.btn-primary.btn-block 正常按钮
+	button(type="button").btn.btn-primary.btn-block.btn-sm 小型按钮.btn-sm
+	button(type="button").btn.btn-primary.btn-block.btn-xs 超小型按钮.btn-xs
+
+	//-  
+	h3.text-primary 3.6 按钮定制风格
+	table.table.table-bordered.table-condensed.table-striped.table-hover
+		thead
+			tr 
+				th 类名
+				th 阐述
+				th 描述
+				th 效果
+		tbody
+			each button in buttons
+				tr
+					td 
+						code .btn.#{button.class}
+					td=button.name
+					td=button.desc
+					td 
+						//- button.btn(type="button", class=button.class)
+						button.btn(class=button.class, type="button") #{button.name + button.name}
+
+	//- 
+	p.text-primary 3.7 按钮禁用状态
+	p 有两种实现方法：
+	ol 
+		li 
+			|在标签中添加
+			code disabled
+			|属性
+		li 
+			|为元素添加类
+			code .disabled 
+	p 效果:
+	ol 
+		li 背景色变化
+		li 透明度从100%降低到65%
+		li 鼠标悬浮没有样式改变
+	button(type="button").btn.btn-primary 正常按钮
+	button(type="button", disabled="disabled").btn.btn-primary 有disabled属性的按钮
+	button(type="button").btn.btn-primary.disabled 有.disabled类的按钮
+
+	//- 
+	h3.text-primary 3.8 按钮组
+	p 
+		|如果需要多个按钮水平排列，可以将它们放置在类名为
+		code .btn-group 
+		|的容器中：
+	mixin buttons(cat)
+		div(class="btn-group " + cat)
+			button(type="button").btn.btn-default 
+				span.glyphicon.glyphicon-step-backward
+			button(type="button").btn.btn-default 
+				span.glyphicon.glyphicon-step-forward
+			button(type="button").btn.btn-default 我没有小图标喔
+			button(type="button").btn.btn-default 
+				span.glyphicon.glyphicon-heart
+	+buttons
+
+	//- 
+	h3.text-primary 3.9 按钮组（按钮组大小）
+	p 
+		|只需在按钮组类
+		code .btn-group
+		|后追加相应类就可实现控制按钮组大小：
+	ol 
+		li 
+			code .btn-group-lg
+			|大按钮组 
+		li 
+			code .btn-group-sm
+			|小按钮组
+		li 
+			code .btn-group-xs
+			|超小按钮组
+	p 大型按钮组：
+	+buttons("btn-group-lg") 
+	p 小型按钮组：
+	+buttons("btn-group-sm")
+	p 超小型按钮组：
+	+buttons("btn-group-xs")
+
+
+	//- 
+	h3.text-primary 3.10 按钮组（富文本编辑按钮组）
+	p 
+		|富文本编辑器中，要实现工具栏分组排列（如下图），可在多个
+		code .btn-group
+		|的外层包裹
+		code .btn-toolbar
+		|。（.btn-toolbar>btn-group*?）
+	img(src="images/toobar.jpg")
+	br
+	p 比如：
+	.btn-toolbar
+		+buttons("btn-group-lg")
+		+buttons("btn-group-xs")
+		+buttons("btn-group-sm")
+
+	//- 
+	h3.text-primary 3.10 按钮组（下拉菜单）
+	p 基本结构： 
+		kbd .button-group>(button.btn.btn-default)*? 
+				| + (.btn-group> (button.btn.btn-default[data-toggle="dropdown"] > span.caret)
+				| + ul.dropdown-menu>li*?
+	.btn-group
+		button(type="button").btn.btn-default 首页
+		button(type="button").btn.btn-default 产品展示
+		button(type="button").btn.btn-default 案例分析
+		button(type="button").btn.btn-default 联系我们
+		.btn-group
+			button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle
+				|关于我们
+				span.caret
+			ul.dropdown-menu
+				li 
+					a(href="##") 公司简介
+				li 
+					a(href="##") 企业文化
+				li 
+					a(href="##") 组织机构
+				li 
+					a(href="##") 客户服务
+	p 单个实现：
+	.btn-group
+		button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle
+			|关于我们
+			span.caret
+		ul.dropdown-menu
+			li 
+				a(href="##") 公司简介
+			li 
+				a(href="##") 企业文化
+			li 
+				a(href="##") 组织机构
+			li 
+				a(href="##") 客户服务
+	p 如果需要垂直结构，只需将最外层
+		code .btn-group
+		|替换为
+		code .btn-group-vertical
+		|即可：
+
+	.btn-group-vertical
+		button(type="button").btn.btn-default 首页
+		button(type="button").btn.btn-default 产品展示
+		button(type="button").btn.btn-default 案例分析
+		button(type="button").btn.btn-default 联系我们
+		.btn-group.dropup
+			button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle
+				|关于我们
+				span.caret
+			ul.dropdown-menu
+				li 
+					a(href="##") 公司简介
+				li 
+					a(href="##") 企业文化
+				li 
+					a(href="##") 组织机构
+				li 
+					a(href="##") 客户服务		
+	
+	//-
+	h3.text-primary 3.11 按钮组（等分按钮）
+	p 
+		span.text-muted 效果：
+		|整个按钮组充满父容器，每个按钮宽度均分。
+	p 
+		span.text-muted 实现方法：
+		|在
+		code .btn-group
+		|基础上追加类
+		code .btn-group-justified
+		|即可。
+	p
+		strong.text-warning 注意：
+		|制作等分按钮时，尽量使用
+		code &lt;a&gt;
+		|来制作按钮。因为display:table在部分浏览器中支持不友好。
+
+	.btn-group.btn-group-justified
+		each item in ["首页","产品展示","联系我们","关于我们"]
+			a(href="#").btn.btn-default #{item}
+
+	//- 
+	h3.text-primary 3.12 按钮组（控制菜单拉伸方向）
+	p 如果需要菜单向上弹出，并且小三角形图标指向上方，只需在最外层
+		code .btn-group
+		|上追加类
+		code .dropup
+		|即可：
+	.btn-group.dropup
+		button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle
+			|关于我们
+			span.caret
+		ul.dropdown-menu
+			li 
+				a(href="##") 公司简介
+			li 
+				a(href="##") 企业文化
+			li 
+				a(href="##") 组织机构
+			li 
+				a(href="##") 客户服务
+					
+
+
+
+

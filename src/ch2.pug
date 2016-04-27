@@ -1,6 +1,7 @@
 extends layout
 
-
+block title
+	title bootstrap学习笔记 第二章
 block content
 	include mixin
 
@@ -12,7 +13,7 @@ block content
 		li 重置margin-top 和margin-bottom，h1-h3都是20px, h4-h6都是10px。
 	p 
 		|为了使非标题元素具有标题元素的性质，还有
-		kbd  .h1-.h6
+		code  .h1-.h6
 		|六个类名,比如：
 	div.h1 bootstrap 一级标题
 	div.h2 bootstrap 二级标题
@@ -29,13 +30,14 @@ block content
 
 	//- 
 	h3.text-primary 2.2 副标题
-	p.lead bootstrap 使用&lt;small&gt;标签作为副标题
+	p bootstrap 使用&lt;small&gt;标签作为副标题
 	ol 
 		li 行高都是1,font-weight为normal, 颜色#999
 		li.
 			 由于small标签在h1-h6标签内，其字体大小在h1-h3中为当前字体的65%,
 			 在h4-h6中为当前字体的75%。
-				h1 bootstrap 一级标题
+	h1 bootstrap 
+		small 一级副标题
 	h2 bootstrap 二级标题
 		small 我是副标题 
 	h3 bootstrap 三级标题
@@ -63,15 +65,15 @@ block content
 	h3.text-primary 2.4 强调内容
 	p 
 		|如果要突出显示某段文字，可以为其添加类
-		kbd .lead 
-		|，p.lead，比如：
+		code .lead 
+		|，p，比如：
 	p 我是一段普通的文字
 	p.lead 我是一段突出显示的文字
 	p 此外，还可通过&lt;small&gt;,&lt;strong&gt;, &lt;em&gt;, &lt;cite&gt;标签突出文本
 
 	//- 
 	h3.text-primary 2.5 粗体
-	p.lead 通过使用 &lt;b&gt;和&lt;strong&gt;元素为文本加粗，两者效果一样。比如：
+	p 通过使用 &lt;b&gt;和&lt;strong&gt;元素为文本加粗，两者效果一样。比如：
 	p
 		|我在学习
 		strong bootstrap
@@ -80,7 +82,7 @@ block content
 
 	//- 
 	h3.text-primary 2.6 斜体
-	p.lead 通过&lt;i&gt;和&lt;em&gt;标签使文本呈现斜体，比如：
+	p 通过&lt;i&gt;和&lt;em&gt;标签使文本呈现斜体，比如：
 	p 
 		|我正在学习
 		em bootstrap 
@@ -90,25 +92,25 @@ block content
 
 	//-
 	h3.text-primary 2.7 与强调相关的类
-	p.lead 除了使用&lt;strong&gt;和&lt;em&gt;标签外，还可以使用不同的类名突出文字
+	p 除了使用&lt;strong&gt;和&lt;em&gt;标签外，还可以使用不同的类名突出文字
 	ol 
 		li 
-			kbd .text-muted
+			code .text-muted
 			|: 提示，浅灰色（#999）
 		li
-			kbd .text-primary 
+			code .text-primary 
 			|: 主要，蓝色（#428bca）
 		li 
-			kbd .text-success
+			code .text-success
 			|: 成功，浅绿色(#3c763d)
 		li 
-			kbd .text-info
+			code .text-info
 			|: 通知消息，浅蓝色(#31708f)
 		li 
-			kbd .text-warning
+			code .text-warning
 			|: 警告，黄色（#8a6d3b）
 		li 
-			kbd .text-danger
+			code .text-danger
 			|: 危险，褐色（#a94442） 
 	.text-muted .text-muted 提示
 	.text-primary .text-primary 主要
@@ -119,16 +121,16 @@ block content
 
 	//- 
 	h3.text-primary 2.8 文本对齐风格
-	p.lead 对于left, center, right, justify四种文本对齐风格，bootstrap提供了四个相应的类名：
+	p 对于left, center, right, justify四种文本对齐风格，bootstrap提供了四个相应的类名：
 	ol 
 		li 
-			kbd .text-left
+			code .text-left
 		li 
-			kbd .text-center 
+			code .text-center 
 		li 
-			kbd .text-right
+			code .text-right
 		li 
-			kbd .text-justify
+			code .text-justify
 	p.text-left 我左对齐
 	p.text-center  我居中对齐
 	p.text-right 我右对齐
@@ -136,7 +138,7 @@ block content
 
 	//- 
 	h3.text-primary 2.9 列表简介
-	p.lead bootstrap 将列表分为了6类：
+	p bootstrap 将列表分为了6类：
 	ol 
 		li 普通列表
 		li 有序列表
@@ -147,7 +149,7 @@ block content
 
 	//- 
 	h3.text-primary 2.10 有序列表和无序列表
-	p.lead bootstrap对有序列表和无序列表只在margin上做了调整
+	p bootstrap对有序列表和无序列表只在margin上做了调整
 	p 普通列表：
 	ul 
 		li 列表项目
@@ -169,9 +171,9 @@ block content
 
 	//- 
 	h3.text-primary 2.11 列表-去点列表
-	p.lead 
+	p 
 		|为ul和ol加上类
-		kbd .list-unstyled
+		code .list-unstyled
 		|就可去掉列表的默认样式，并且去掉了列表默认的左边距：
 	ol
 		li 有序列表 1
@@ -191,9 +193,9 @@ block content
 
 	//- 
 	h3.text-primary 2.12 列表-内联列表
-	p.lead 
+	p 
 		|类名为
-		kbd .list-inline
+		code .list-inline
 		|, 实现列表项水平排列，适用于导航条制作,
 		|并且还为各列表项增加了左右各5px的padding:
 	p 城市：
@@ -203,7 +205,7 @@ block content
 
 	//- 
 	h3.text-primary 2.13 列表-定义列表
-	p.lead 对于定义列表，bootstrap没做太多调整，只是调整了行间距，外边距和字体加粗效果
+	p 对于定义列表，bootstrap没做太多调整，只是调整了行间距，外边距和字体加粗效果
 	dl 
 		dt 北京
 		dd 北京是中国的首都，是政治文化集中地
@@ -212,7 +214,7 @@ block content
 
 	//- 
 	h3 2.14 列表-水平定义列表
-	p.lead 
+	p 
 		|实现类：
 		lbd .dl-horizontal
 		|。定义列表水平显示
@@ -230,18 +232,18 @@ block content
 
 	//- 
 	h3.text-primary 2.15 代码1
-	p.lead  bootstrap提供了3种风格来显示代码
+	p  bootstrap提供了3种风格来显示代码
 	ol
 		li &lt;code&gt;: 一般针对单个单词或单个句子代码
 		li &lt;pre&gt;:一般针对多行代码，即成块代码
-		li &lt;kbd&gt;: 表示用户需要键盘输入的内容
+		li &lt;code&gt;: 表示用户需要键盘输入的内容
 	p code风格：
 	div 
 		code &lt;code&gt;
 		|，
 		code &lt;pre&gt;
 		|，
-		code &lt;kbd&gt;
+		code &lt;code&gt;
 	div
 		|pre风格：
 		pre
@@ -251,17 +253,17 @@ block content
 			|		(* n (fact (- n 1))))
 
 	div 
-		|kbd风格：
+		|code风格：
 		|请输入
-		kbd ctrl+c
+		code ctrl+c
 		|复制代码
-		kbd ctrl+v
+		code ctrl+v
 		|粘贴代码
 
 	h3.text-primary 2.16 代码2
-	p.lead 
+	p 
 		|使用pre风格时，如果代码过长，可添加类
-		kbd .pre-scrollable
+		code .pre-scrollable
 		|,来实现高超过340px后出现滚动条
 	pre.pre-scrollable 
 		-var i = 0
@@ -270,42 +272,42 @@ block content
 
 	//- 
 	h3.text-primary 2.17 表格
-	p.lead bootstrap为表格提供了1种基础样式，4种附加样式，和1种响应式样式，对应的类为：
+	p bootstrap为表格提供了1种基础样式，4种附加样式，和1种响应式样式，对应的类为：
 	ol 
 		li 
-			kbd .table
+			code .table
 			|: 基础表格
 		li 
-			kbd .table-striped
+			code .table-striped
 			|: 斑马线表格
 		li 
-			kbd .table-bordered
+			code .table-bordered
 			|: 带边框表格
 		li 
-			kbd .table-hover
+			code .table-hover
 			|: 鼠标悬停高亮表格
 		li 
-			kbd .table-condensed
+			code .table-condensed
 			|: 紧凑型表格
 		li 
-			kbd .table-responsive
+			code .table-responsive
 			|: 响应式表格
 
 
 	//- 
 	h3.text-primary 2.18 表格-表格行的类
-	p.lead bootstrap还为表格行元素&lt;tr&gt;提供了不同类，控制不同行的颜色：
+	p bootstrap还为表格行元素&lt;tr&gt;提供了不同类，控制不同行的颜色：
 	ol.list-inline 
 		li 
-			kbd .active
+			code .active
 		li
-			kbd .success
+			code .success
 		li
-			kbd .info
+			code .info
 		li
-			kbd .warning
+			code .warning
 		li
-			kbd .danger
+			code .danger
 	+table("table table-bordered", ["", "类名", "描述", "对应颜色"], 
 	[["active", ".active", "表示当前活动的信息","#f5f5f5"],
 	["success", ".success","表示成功或者正确的行为","#dff0d8"],
@@ -315,9 +317,9 @@ block content
 
 	//- 
 	h3.text-primary 2.19 表格-基础表格
-	p.lead 
+	p 
 		|bootstap对&lt;table&gt;没做任何修改，要得到基础表格，需加上类名
-		kbd .table
+		code .table
 	ol 
 		li 给表格设置了margin-top:20px，以及单元格设置内边距
 		li 给&lt;thead&gt;底部设置了2px的浅灰色实线
@@ -326,11 +328,11 @@ block content
 
 	//- 
 	h3.text-primary 2.20 表格-斑马线表格
-	p.lead 
+	p 
 		|只需在
-		kbd .table
+		code .table
 		|的基础上加上类
-		kbd .table-striped
+		code .table-striped
 		|。
 		span.text-muted 效果：
 		|tbody上隔行有浅灰色背景。
@@ -341,11 +343,11 @@ block content
 
 	//- 
 	h3.text-primary 2.21 表格-带边框的表格
-	p.lead 
+	p 
 		|与斑马线表格的使用方法一样，在
-		kbd .table
+		code .table
 		| 的基础上加上
-		kbd .table-bordered
+		code .table-bordered
 		|类即可。
 		span.text-muted 效果：
 		|整个表格具有边框效果
@@ -353,9 +355,9 @@ block content
 
 	//- 
 	h3.text-primary 2.22 表格-鼠标悬浮高亮的表格
-	p.lead 
+	p 
 		span.text-muted 类名：
-		kbd .table-hover
+		code .table-hover
 		|。
 		span.text-muted 效果
 		|：鼠标悬浮在某行时，该行背景为浅灰色。	
@@ -364,9 +366,9 @@ block content
 
 	//- 
 	h3.text-primary 2.23 表格-紧凑型表格
-	p.lead
+	p
 		span.text-muted 类名：
-		kbd .table-condensed
+		code .table-condensed
 		|。
 		span.text-muted 效果：
 		|重置单元格内边距，使正跟表格看起来更紧凑。（添加边框看起来更明显）
@@ -375,7 +377,7 @@ block content
 
 	p.text-muted 
 		|以上效果可以混合使用，并且不管制作那种表格都离不开类
-		kbd .table
+		code .table
 		|：
 	+table("table table-condensed table-hover table-bordered table-striped", ["", "表格标题", "表格标题", "表格标题"], 
 	[["", "表格单元格", "表格单元格", "表格单元格"],
@@ -385,13 +387,13 @@ block content
 
 	//- 
 	h3.text-primary 2.24 表格-响应式表格
-	p.lead
+	p
 		span.text-muted 实现原理：
 		|将具有类
-		kbd .table
+		code .table
 		|(.table-bordered...)	
 		|的表格置于类为
-		kbd .table-responsive
+		code .table-responsive
 		|的&lt;div&gt;元素中。
 		span.text-muted 效果：
 		|当屏幕宽度小于786px时，表格底部出现滚动条，大于时滚动条消失。

@@ -1,9 +1,11 @@
 extends layout
 
-include mixin
+
 block title 
-	title 第三章 表单
+	title 第三章 bootstrap学习笔记 表单
 block content
+	include mixin
+	include data
 	h2.text-primary 3. 表单
 
 	//- 
@@ -22,11 +24,12 @@ block content
 			strong 文本域
 		li 
 			strong 按钮
-	p.lead 对于&lt;fieldset&gt;，&lt;legend&gt;，&lt;lable&gt;元素，bootstrap对margin，padding和border做了细化设置。
-	p.lead 
+	p 
+		|对于&lt;fieldset&gt;，&lt;legend&gt;，&lt;lable&gt;元素，bootstrap对margin，padding和border做了细化设置。
+		br
 		|对于&lt;input&gt;，&lt;select&gt;，&lt;textarea&gt;等元素，
 		|如果加上类名
-		kbd .form-control
+		code .form-control
 		|就会产生定制效果：
 	ol 
 		li 宽度变为100%
@@ -38,17 +41,17 @@ block content
 
 	//- 
 	h3.text-primary 3.2 水平表单
-	p.lead bootstrap表单默认为垂直风格，要实现水平需满足以下条件:
+	p bootstrap表单默认为垂直风格，要实现水平需满足以下条件:
 	ol
 		li 
 			strong 
 				|在&lt;form&gt;元素使用类
-				kbd .form-horizontal
+				code .form-horizontal
 		li 
 			strong 配合bootstrap网格系统（后面有介绍）
-	p.lead 
+	p 
 		|添加类
-		kbd .form-horizontal
+		code .form-horizontal
 		|有以下效果
 	ol 
 		li 
@@ -56,7 +59,7 @@ block content
 		li
 			strong 
 				|改变
-				kbd .form-group
+				code .form-group
 				|的表现形式，类似于网格系统的"row"
 		li 
 			strong 只有当屏幕宽度大于786px时才能达到此效果
@@ -82,19 +85,19 @@ block content
 
 	//- 
 	h3.text-primary 3.3 内联表单
-	p.lead 
+	p 
 		|效果：表单所有控件都在一行内显示。
 		|类：
-		kbd .form-inline
+		code .form-inline
 	p.text-muted 注意
 	ol 
 		li 
 			|&lt;lable&gt;要放置在
-			kbd .form-group
+			code .form-group
 			|内
 		li 
 			|&lt;lable&gt;元素加上类
-			kbd .sr-only
+			code .sr-only
 			|不会显示，放置的目的是方便
 			strong 屏幕阅读器。
 
@@ -113,10 +116,10 @@ block content
 
 	//- 
 	h3.text-primary 3.3 表单控件（输入框 input）
-	p.lead 需要指定input元素的type类型，如果没有，不能得到正确样式。
-	p.lead 
+	p 需要指定input元素的type类型，如果没有，不能得到正确样式。
+	p 
 		|为了让控件在各种表单风格样式不出错，需要添加类名
-		kbd .form-control
+		code .form-control
 		|。
 	form(role="form")
 			.form-group
@@ -124,11 +127,11 @@ block content
 
 	//- 
 	h3.text-primary 3.5 表单控件（下拉选择框select）
-	p.lead 
+	p 
 		|&lt;select&gt;添加类名
-		kbd .form-control
+		code .form-control
 		|包裹在类为
-		kbd .form-group
+		code .form-group
 		|的&lt;div&gt;中。
 		|multiple选项保持不变，自定义。
 	form(rol="form")
@@ -145,14 +148,315 @@ block content
 
 	//- 
 	h3.text-primary 3.6 表单控件（文本域textarea）
-	p.lead 
+	p 
 		|设置rows可定义高度，设置cols可定义宽度。
 		|不过如果在&lt;textarea&gt;添加类
-		kbd .form-control
+		code .form-control
 		|则无需设置cols，bootstrap将其宽度设置为
 		strong 100%
 		|或
 		strong auto
 
 	form(role="form")
-		textarea.form-control(cols="3", rows="2")
+		textarea.form-control(cols="3", rows="1")
+
+	//- 
+	h3.text-primary 3.7 表单控件（复选框chekbox和radio）
+	p 
+		|checkbox和radio与其label的对齐很头疼， 这在bootstrap中得到了解决，
+		|实现步骤：
+	ol
+		li 不管checkbox还是radio都用label包裹起来
+		li 
+			|checkbox连同label标签放在名为
+			code .checkbox
+			|的容器内
+		li 
+			|radio连同label标签放在名为
+			code .radio
+			|的容器内。
+			|（bootstrap主要借助
+			code .checkbox
+			|和
+			code .radio
+			|来处理对齐方式。）
+
+	form(role="form")
+		.checkbox
+			label
+				input(type="checkbox")
+				|记住密码
+		.radio
+			label
+				input(type="radio", name="like")
+				|喜欢
+		.radio
+			label
+				input(type="radio", name="like")
+				|不喜欢
+
+	//- 
+	h3.text-primary 3.8 表单控件（复选框和单选按钮水平排列）
+	p bootstrap实现复选框和单选框水平排列原理：
+	ol 
+		li 
+			|如果checkbox需要水平排列，只需在
+			span.text-warning label
+			|标签上添加类
+			code .checkbox-inline
+		li 
+			|如果要radio水平排列，只需在
+			span.text-warning label
+			|标签上添加类
+			code .radio-inlin
+	-var hobbies = ["游戏","摄影","旅游"]
+	-var genders = ["男性","女性","中性"]
+	form(role="form")
+		.form-group
+			each hobby, i in hobbies
+				label.checkbox-inline
+					input(type="checkbox", value="options" + i) 
+					| #{hobby}
+		.form-group
+			each gender, i in genders
+				label.radio-inline
+					input(type="radio", name="gender", value="options" + i)
+					| #{gender}
+
+	//- 
+	h3.text-primary 3.9 表单控件（按钮）
+	p 
+		|见
+		a(href="ch4.html") 第四章 按钮
+	
+	//- 
+	h3.text-primary 3.10 表单控件大小
+	p 
+		span.text-muted 高度控制
+		|：可以通过设置
+		code height
+		|，
+		code line-height
+		|，
+		code padding
+		|和
+		code font-size 
+		|控制控件高度。
+		|不过bootsrtrap提供了两个类名来控制控件高度：
+	ol
+		li 
+			code .input-sm
+			|：比正常大小更小
+		li 
+			code .input-lg
+			|：比正常大小更大
+	p.text-muted 这两个类名仅适用于&lt;input&gt;，&lt;select&gt;和&lt;textarea&gt;控件。
+	input.form-control.input-sm(type="text", placeholder="添加类.input-sm：比正常大小更小")
+	br
+	input.form-control(type="text", placeholder="仅有类.form-control：正常大小")
+	br
+	input.form-control.input-lg(type="text", placeholder="添加类.input-lg：比正常大小更大")
+	p
+		span.text-muted 宽度控制
+			|：借助bootstrap的网格系统，可设置控件的宽度。
+	ol.list-unstyled
+		li 
+			|方法1：from.form-horizotal[role="form"]>div.form-group>div.col-?-?>input.form-control
+			|即使用表单的
+			code .form-horizontal
+			|形式，通过在
+			code .form-group
+			|中的包裹div设置网格系统实现控制控件宽度。
+			form.form-horizontal(rol="form")
+				.form-group
+					each i in [1,2,3]
+						.col-xs-4
+							input.form-control(type="text", placeholder=".col-xs-4")
+				.form-group
+					each i in [1,2]
+						.col-xs-6
+							input.form-control(type="text", placeholder=".col-xs-6")
+				.form-group
+					.col-xs-5
+						input.form-control(type="text", placeholder=".col-xs-5")
+					.col-xs-7
+						input.form-control(type="text", placeholder=".col-xs-7")
+		li 
+			|方法2：div.row>div.col-?-?>input.form-control
+			|即
+			code .form-group
+			|相当于网格系统中的
+			code .row
+			|。
+			br
+			.row
+				each i in [1,2,3]
+					.col-xs-4
+						input.form-control(type="text", placeholder=".col-xs-4")
+			br
+			.row
+				each i in [1,2]
+					.col-xs-6
+						input.form-control(type="text", placeholder=".col-xs-6")
+			
+			br 
+			.row
+				.col-xs-5
+					input.form-control(type="text", placeholder=".col-xs-5")
+				.col-xs-7
+					input.form-control(type="text", placeholder=".col-xs-7")
+
+	//- 
+	h3.text-primary 3.11 表单控件状态（聚焦状态）
+	p 
+		|使用bootstrap时，要让表单控件出现焦点效果，需要在控件上添加类
+		code .form-control
+	p 
+		span.text-muted 实现原理
+		|：为焦点状态添加伪类
+		code :focus
+	input.form-control(type="text", placeholder= "添加类名.form-control就可产生焦点效果")
+	p 
+		|file，radio，checkbox控件与普通input控件不一样，不需要加
+		code .form-control
+		|类。源码：
+	pre
+		|input[type="file"]:focus,
+		|input[type="radio"]:focus,
+		|input[type="checkbox"]:focus {
+		|outline: thin dotted;
+		|outline: 5px auto -webkit-focus-ring-color;
+		|outline-offset: -2px;
+		|}
+	
+	//- 
+	h3.text-primary 3.12 表单控件状态（禁用状态）
+	p 我是正常状态：
+	input.form-control(type="text", placeholder="我是正常状态")
+	ol
+		li 
+			|只需在表单控件上添加属性
+			code disabled
+			|即可。背景会变成灰色，且会出现不准输入的手形。
+			input.form-control(type="text", disabled, placeholder="我有diabled属性")
+		li 
+			|如果只是有
+			code disabled
+			|属性，而没有添加类
+			code .form-control
+			|，控件只会改变背景颜色，而不会出现不可输入的手形：
+			input(type="text", disabled, placeholder="我有diabled属性，但没有类.form-control")
+		li 
+			|如果
+			code fieldset
+			|设置了
+			code disabled
+			|属性，整个域都会是禁用状态：
+			form(role="form")
+				fieldset(disabled)
+					.form-group
+						label(for="disabledtext") 禁用输入框
+						input#disabledtext.form-control(type="text", placeholder="禁止输入")
+					.form-group
+						label(for="disabledselect") 禁用的下拉框
+						select#disabledselect.form-control(name="")
+							option 不可选择
+							option 还是不可选择（看都看不见我）
+					.checkbox
+						label
+							input(type="checkbox") 
+							|不可选择
+					button.btn.btn-primary(type="submit") 不可提交
+		li 
+			|不过，如果在禁用的fieldset中，input包裹在legend中，不会被禁用，
+			span.text-muted 只是视觉效果和禁用一样：
+			form(role="form")
+				fieldset(disabled)
+					legend
+						input.form-control(type="text", placeholder="我所在的域被禁用了，不过我包裹在legend中，所以没被禁用。点我试试！～")
+	//- 
+	h3.text-primary 3.13 表单控件状态（验证状态）
+	p bootstrap为表单验证状态提供了下面效果：
+	ol
+		li 
+			code .has-warning
+			|：警告信息（黄色）
+		li 
+			code .has-error
+			|：错误信息（红色）
+		li 
+			code .has-success
+			|：成功状态（绿色）
+	p.text-warning
+		|使用时，是在
+		code .form-group
+		|上添加相应状态类名。并且相应的lable元素要添加类
+		code .control-label
+	form(role="form")
+		.form-group.has-success
+			label.control-label(for="inputSuccess") 成功状态
+			input#inputSuccess.form-control(type="text", placeholder="成功状态")
+		.form-group.has-warning
+			label.control-label(for="inputWarning") 警告状态
+			input(type="text", name="inputWarning", id="inputWarning", placeholder="警告状态").form-control
+		.form-group.has-error
+			label.control-label(for="inputError") 错误状态
+			input(type="text", name="inputError", id="inputError", placeholder="错误状态").form-control
+	p 
+		|如果要想在提示时在input框内加上图标，还需要在
+		code .form-group
+		|后面加上类
+		code .has-feedback
+		br 
+		|并且在input后需加上一个span元素，其类名为
+		code .glyphicon.glyphicon-?.form-control-feedback
+		|其中?号代表：
+		ul.list-unstyled
+			li 
+				code .glyphicon-ok
+				|：成功 
+			li 
+				code .glyphicon-warning-sign 
+				|：警告
+			li 
+				code .glyphicon-remove
+				|：错误 
+
+	form(role="form")
+		.form-group.has-success.has-feedback
+			label.control-label(for="inputSuccess") 成功状态
+			input#inputSuccess.form-control(type="text", placeholder="成功状态")
+			span.glyphicon.form-control-feedback.glyphicon-ok
+		.form-group.has-warning.has-feedback
+			label.control-label(for="inputWarning") 警告状态
+			input(type="text", name="inputWarning", id="inputWarning", placeholder="警告状态").form-control
+			span.glyphicon.form-control-feedback.glyphicon-warning-sign
+		.form-group.has-error.has-feedback
+			label.control-label(for="inputError") 错误状态
+			input(type="text", name="inputError", id="inputError", placeholder="错误状态").form-control
+			span.glyphicon.form-control-feedback.glyphicon-remove
+		
+	//- 
+	h3.text-primary 3.14 表单提示信息
+	p 
+		|表单验证时需要提示信息时，可以在图标span和input中间添加类为
+		code .help-block
+		|的span。
+	form(role="form")
+		.form-group.has-success.has-feedback
+			label.control-label(for="inputSuccess") 成功状态
+			input#inputSuccess.form-control(type="text", placeholder="成功状态")
+			span.help-block 信息输入正确
+			span.glyphicon.form-control-feedback.glyphicon-ok
+
+	p.text-muted 默认在输入框底部，不过可以通过网格设置，放在input后面：
+	form(role="form")
+		.form-group.has-success.has-feedback
+			label.control-label(for="inputSuccess") 成功状态
+			.row
+				.col-xs-6
+					input#inputSuccess.form-control(type="text", placeholder="成功状态")
+					
+				span.help-block.col-xs-6 信息输入正确
+			
+
