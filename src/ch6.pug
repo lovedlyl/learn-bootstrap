@@ -1,0 +1,186 @@
+extends layout
+
+block title
+	title 第六章 下拉菜单
+
+block content 
+	h2.text-primary 第六章 下拉菜单
+
+	//- 
+	- var foods = ["梨","苹果","香蕉"]
+	//- 
+	//- 
+	h3.text-primary 6.1 基础
+	p 
+		span.text-warning 注意：
+		|下拉菜单依赖bootstrap.js。所以使用前需引入jquery.js和bootstrap.js
+	p 实现过程：
+	ol 
+		li 使用名为
+			code .dropdown
+			|的容器包裹整个下拉菜单，比如：
+			pre &lt;div class="dropdown"&gt;&lt;/div&gt;
+		li 使用button按钮作为父菜单，并且定义类名为
+			code .dropdown-toggle
+			|。自定义属性
+			code data-toggle
+			|其属性值必须和最外层类名相同。
+			pre data-toggle="dropdown"
+		li button元素包含一个类名为
+			code .caret
+			|的span元素，用来制作箭头图标。
+		li 下拉菜单项使用ul列表，并定义类名为
+			code .dropdown-menu
+			pre &lt;ul class="dropdown-menu"&gt;
+	p 例：
+	.dropdown
+		button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle 下拉菜单
+			span.caret
+		ul.dropdown-menu
+			each item in foods
+				li
+					a=	item
+
+	//- 
+	h3.text-primary 6.2 实现原理
+	p 
+		code .dropdown-menu
+		|默认为隐藏模式。源码：
+		pre 
+			|.dropdown-menu {
+			|	position: absolute;/*设置绝对定位，相对于父元素div.dropdown*/
+			|	top: 100%;/*让下拉菜单项在父菜单项底部，如果父元素不设置相对定位，该元素相对于body元素*/
+			|	left: 0;
+			|	z-index: 1000;/*让下拉菜单项不被其他元素遮盖住*/
+			|	display: none;/*默认隐藏下拉菜单项*/
+			|	float: left;
+			|	min-width: 160px;
+			|	padding: 5px 0;
+			|	margin: 2px 0 0;
+			|	font-size: 14px;
+			|	list-style: none;
+			|	background-color: #fff;
+			|	background-clip: padding-box;
+			|	border: 1px solid #ccc;
+			|	border: 1px solid rgba(0, 0, 0, .15);
+			|	border-radius: 4px;
+			|	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+			|	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+			|}
+	p 当点击div.dropdown时，为其toggle类
+		code .open
+		|。
+		pre 
+			|.open > .dropdown-menu {
+			|	display: block;
+			|}
+
+	//- 
+	h3.text-primary 6.3 下拉菜单（下拉分割线）
+	p 假设下拉菜单中有多个分组，可以添加一个
+		span.text-muted 空&lt;li&gt;元素，并设置类
+		code .divider
+		|。 
+	.dropdown
+		button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle 食物
+			span.caret
+		ul.dropdown-menu
+			each food in foods
+				li
+					a= food 
+			li.divider
+			each food in foods
+				li
+					a= food
+
+	//- 
+	h3.text-primary 6.4 下拉菜单（菜单标题）
+	p 既然可以将下拉菜单分成多组，就可以给每组加上不同标题。
+		|方法为：也是增加一个
+		span.text-muted 空&lt;li&gt;元素，并设置类
+		code .dropdown-header
+		|。 
+	.dropdown
+		button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle 食物
+			span.caret
+		ul.dropdown-menu
+			li.dropdown-header 第一组食物
+			each food in foods
+				li
+					a= food 
+			li.divider
+			li.dropdown-header 第二组食物
+			each food in foods
+				li
+					a= food
+
+	//-
+	h3.text-primary 6.5 下拉菜单（对齐方式）
+	p 下拉菜单默认与父元素
+		span.text-muted 左对齐
+		|。如果需要右对齐：在
+		code .dropdown-menu
+		|上添加一个类
+		code .pull-right
+		|或
+		code .dropdown-menu-right
+		|两者效果一样。
+		span.text-warning 同时设置对应的
+					code .dropdown
+					|为 float: left。
+	p 与
+		code .dropdown-menu-right
+		|相对应的就是
+		code .dropdown-menu-left
+		|即默认的左对齐。
+
+
+	mixin dropdownAlign(dir)
+		p= dir.desc
+			.dropdown(style="float:left;")
+				button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle 食物
+					span.caret
+
+				ul(class=dir.cat)
+					li.dropdown-header 我是第一组食物
+					each food in foods
+						li
+							a= food 
+					li.dropdown-header 我是第二组食物
+					each food in foods
+						li 
+							a= food 
+	+dropdownAlign({desc:"我是默认左对齐的下拉列表：", cat: "dropdown-menu"})
+	br
+	+dropdownAlign({desc: "添加.full-right类使菜单与父容器右对齐", cat: "dropdown-menu pull-right"})
+	br
+	+dropdownAlign({desc: "直接使用.dropdown-menu-right代替.pull-right：", cat: "dropdown-menu dropdown-menu-right"})
+	br
+	+dropdownAlign({desc: "直接使用.dropdown-menu-left获得默认左对齐：", cat: "dropdown-menu dropdown-menu-left"})
+	br
+	p.text-muted （以上效果设置浮动后有点乱）
+
+	//- 
+	h3.text-primary 6.5 下拉菜单（菜单项样式）
+	p 默认菜单项鼠标悬浮时有样式改变，其通过:hover和:active伪类设置。
+		|此外还可以为它们设置
+		code .active 
+		|和
+		code .disabled
+		|获得不同效果
+	.dropdown
+		button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle 食物
+			span.caret
+		ul.dropdown-menu
+			//- each food in foods
+			//- 	li qefdqwef
+			li 
+				a 我是正常状态
+			li.active 
+				a 我是激活状态
+			li.disabled 
+				a 我是禁用状态
+	//- 
+	h3.text-primary 6.6 下拉菜单（按钮组下拉菜单）
+	p 见
+		a(href="ch4.html", target="_blank") 第四章
