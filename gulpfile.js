@@ -50,7 +50,8 @@ gulp.task("convertPug", function() {
 
 gulp.task("default", function() {
     browserSync.init({
-        server: "dist"
+        server: "../lovedlyl.github.io/learn-bootstrap"
+        // server: "dist"
     });
     gulp.watch("src/*.pug", ["convertPug"]);
     gulp.watch("dist/*.html").on("change", reload);
