@@ -8,7 +8,7 @@ block content
 		|整理。
 
 	ul.list-unstyled
-			each chapter in chapters
+			each chapter in chapters.slice(1)
 				li 
 					a(href=chapter.url) #{chapter.name}：#{chapter.desc}
 

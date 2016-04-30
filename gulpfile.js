@@ -37,7 +37,7 @@ gulp.task("image", function () {
 })
 // 将pug文件转换为html文件
 gulp.task("convertPug", function() {
-    gulp.src(["src/index.pug", "src/ch*.pug"])
+    gulp.src("src/!(data|mixin).pug")
         .pipe(plumber())
         .pipe(pug({ pretty: false }))
         .pipe(plumber.stop())

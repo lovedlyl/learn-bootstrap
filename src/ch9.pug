@@ -1,0 +1,406 @@
+extends layout
+
+block title 
+	title 第九章 导航条
+
+block content 
+	h2.text-primary 第九章 导航条
+
+	mixin items()
+		li
+			a(href="#") 默认
+		li.active 
+			a(href="#") 激活
+		li.disabled 
+			a(href="#") 禁用
+	mixin pages(cat)
+		ul(class=cat)
+			li 
+				a(href="#") &laquo;第一页
+			li.active 
+				span 10 激活
+			each i in [11,12,13]
+				li 
+					a(href="#") #{i}
+			li.disabled
+				span 14 禁用
+			li 
+				a(href="#") 最后一页&raquo;
+
+	//- 
+	h3.text-primary 9.1 与导航的区别
+	p 
+		a(href="ch8.html") 上一章
+		|介绍的导航与本章介绍的导航条有明显的区别，导航条的特点有：
+		ol 
+			li 有统一的背景色
+			li 可以是纯连接（类似于导航），也可以是表单
+			li 也可以将导航和表单结合使用
+
+	//- 
+	h3.text-primary 9.2 基础导航条
+	p 制作基础导航条的步骤是：
+		ol 
+			li 在导航列表(&lt;ul class="nav"&gt;)的基础上增添类
+				code .navbar-nav
+			li 列表外部添加容器(div)并使用类
+				code .navbar
+				|和
+				code .navbar-default
+	.navbar.navbar-default
+		ul.nav.navbar-nav
+			+items()
+
+	h3.text-primary 9.3 导航条标题，二级菜单及状态
+	p 
+		strong 导航标题：
+		|可以通过
+		kbd 
+			code .navbar-header
+			| > 
+			code .navbar-brand
+		|的形式为导航条添加标题：
+	.navbar.navbar-default(role="navigation")
+		.navbar-header 
+				a(href="#").navbar-brand 慕课网
+		.nav.navbar-nav
+			+items()
+	p.text-muted 其主要起提醒作用，改良后可以用来放置logo。
+
+	p 
+		strong 二级菜单：
+		|与给导航制作二级菜单相同，见
+		a(href="ch8.html") 第八章
+	.navbar.navbar-default
+		.navbar-header 
+				a(href="#").navbar-brand 慕课网
+		.nav.navbar-nav
+			li 
+				a(href="#", data-toggle="dropdown").dropdown-toggle 我是有二级菜单
+					span.caret
+				ul.dropdown-menu
+					+items()
+			+items()
+
+	p 
+		strong 选项状态：
+		|各选项（&lt;li&gt;）添加类
+		code .active
+		|就可获得激活状态，添加类
+		code .disabled
+		|就可获得禁用状态。（上面所有例子都有此效果。）
+
+	//- 
+	h3.text-primary 9.4 带表单的导航条
+	p 导航条中还可包含表单，实现方法：
+	ol
+		li 为&lt;form&gt;元素添加类
+			code .navbar-form
+		li 如果需要表单靠近其左端内容，可添加类
+			code .navbar-left
+			|。（默认状态）
+		li 如果需要靠近最右端内容，可添加类
+			code .navbar-right
+		li.text-warning 上面“左右”靠近方式同样适用于其它导航条元素
+	.navbar.navbar-default
+		.navbar-header
+			a(href="#").navbar-brand 慕课网
+		ul.nav.navbar-nav
+			+items()
+		form(action="", method="POST", role="form").navbar-form.navbar-right
+			.form-group
+				input.form-control(type="text", placeholder="请输入搜索内容")
+			button.btn.btn-primary(type="submit") 搜索 
+
+	//-
+	h3.text-primary 9.5 导航条中的按钮，文本和超链接 
+		small.text-danger （这节没咋理解，有点混乱）
+	p 对于
+		strong 单独的文本，链接和按钮
+		|，其默认样式和整个导航条可能有些冲突，为了改变这些冲突，可以为它们加上相应的类：
+		ul 
+			li 文本（一般为&lt;p&gt;元素）：
+				code .navbar-text
+			li 按钮（好像没啥效果）：
+				code .navbar-btn
+			li 链接：
+				code .navbar-link
+	p 
+		strong 不加的效果：
+		.navbar.navbar-default
+			.navbar-header
+				a(href="#").navbar-brand 慕课网
+			div
+				button(type="button").btn.btn-default 登录
+			p 文本
+			p
+				a(href="#") 超链接
+	p
+		strong 加后的效果：
+		.navbar.navbar-default
+			.navbar-header
+				a(href="#").navbar-brand 慕课网
+			div
+				button(type="button").btn.btn-default.navbar-btn 登录
+			p.navbar-text 文本
+			p
+				a(href="#").navbar-link 超链接
+	p
+		strong 注意：
+		ol 	
+			li 在
+				code .navbar-brand
+				|和
+				code .navbar-nav
+				|中效果更明显。
+			li 一般相邻的此类元素不能超过两个
+	.navbar.navbar-default
+		.nav.navbar-nav
+			a(href="#") 连接(没有类.navbar-link)
+			a(href="#").navbar-link 连接(有类.navbar-link)
+			button(type="button").btn.btn-default 按钮（没有类.navbar-btn）
+			button(type="button").btn.btn-default.navbar-btn 按钮（有类.navbar-btn）
+			p 没有类.navbar-text
+			p.navbar-text 有类.navbar-text
+
+
+	//- 
+	h3.text-primary 9.6 将导航条固定在浏览器顶部和底部
+	p 
+		strong 实现方法：
+		|在
+		code .navbar-default
+		|基础上添加类
+		code .navbar-fixed-bottom
+		|或
+		code .navbar-fixed-top
+		|：
+		span.text-info
+			a(href="navbar_fixed.html", target="_blank") 演示页面
+	p 
+		strong 实现原理：
+		|将导航条设置为position:fixed，top和bottom值设置为0。
+	p.text-danger 可以观察到页面底部和顶部内容被导航条遮住了，
+		|导航条默认高度为50px，所以解决方法有两种
+	ol 
+		li 在body上设置padding
+			pre 
+				|body {
+				|	padding-top: 70px;/*有顶部固定导航条时设置*/
+				|	padding-bottom: 70px;/*有底部固定导航条时设置*/
+				|}
+		span.text-info
+			a(href="navbar_fixed-1.html", target="_blank") 演示页面
+		li 将固定导航条放置在页面内容前（~选择器：匹配元素之后的同级元素）
+			pre 
+				|.navbar-fixed-top ~ .content {
+				|	padding-top: 70px;
+				|}
+				|.navbar-fixed-bottom ~ .content {
+				|	padding-bottom: 70px;
+				|}
+		span.text-info
+			a(href="navbar_fixed-2.html", target="_blank") 演示页面
+
+	//- 
+	h3.text-primary 9.7 响应式导航条
+	p 当屏幕宽度<768px时，整个导航内容隐藏，出现按钮，点击按钮时导航内容出现
+	p 
+		strong 实现方法：
+		ol
+			li
+				span.text-warning 需要折叠的内容
+				|放在
+				code .collapse.navbar-collapse.navbar-responsive
+				|中。并为其添加一个
+				span.text-warning .类名
+				|或
+				span.text-warning #id
+			li 将以下内容放置在
+				code .navbar-header
+				|中（固定写法）
+				pre 
+					|&lt;button class="navbar-toggle" type="button" data-toggle="collapse"&gt;
+					|	&lt;span class="sr-only"&gt;Toggle Navigation&lt;/span&gt;
+					|	&lt;span class="icon-bar"&gt;&lt;/span&gt;
+					|	&lt;span class="icon-bar"&gt;&lt;/span&gt;
+					|	&lt;span class="icon-bar"&gt;&lt;/span&gt;
+					|&lt;/button&gt;					
+			li 为上面的button添加属性data-target=".class/#id"。这里的id或class由
+				span.text-warning 需要折叠的内容
+				|上添加的id或class决定。
+	P.text-muted 缩小视窗查看效果：
+	.navbar.navbar-default
+		.navbar-header
+			button(type="button", data-toggle="collapse", data-target=".navbar-responsive").btn.btn-default.navbar-toggle 
+				span.sr-only 隐藏导航
+				each i in [1,2,3]
+					span.icon-bar
+			span.navbar-brand 慕课网
+		.collapse.navbar-collapse.navbar-responsive
+			ul.nav.navbar-nav
+				+items()
+			form(action="", method="POST", role="form").navbar-form.navbar-right
+				.form-group
+					input.form-control(type="text", placeholder="请输入搜索内容")
+				button.btn.btn-primary(type="submit") 搜索
+				
+	//- 
+	h3.text-primary 9.8 反色导航
+	p 反色导航的使用与默认导航没有区别，只需将
+		code .navbar-default 
+		|替换为
+		code .navbar-inverse
+		|即可：
+	.navbar.navbar-inverse
+		.navbar-header
+			button(type="button", data-toggle="collapse", data-target=".navbar-responsive").btn.btn-default.navbar-toggle 
+				span.sr-only 隐藏导航
+				each i in [1,2,3]
+					span.icon-bar
+			span.navbar-brand 慕课网
+		.collapse.navbar-collapse.navbar-responsive
+			ul.nav.navbar-nav
+				+items()
+			form(action="", method="POST", role="form").navbar-form.navbar-right
+				.form-group
+					input.form-control(type="text", placeholder="请输入搜索内容")
+				button.btn.btn-primary(type="submit") 搜索
+
+	//- 
+	h3.text-primary 9.9 带页码的分页导航
+	p 
+		strong 使用方法：
+		|通常使用
+		kbd div>a
+		|或
+		kbd div>span
+		|的形式制作分页导航，不过bootstrap中使用
+		kbd ul>li>a 
+		|的形式，并为ul添加类：
+		code .pagination
+	+pages("pagination")
+	p 
+		strong 状态设置：
+		|如果需要选项为禁用状态或激活状态，需要为li元素添加类
+		code .disabled
+		|和
+		code .active
+		|。 
+		span.text-warning 不过禁用和激活的选项样式上正确，还需要js将其中的a标签替换为span标签，避免点击时发生跳转。
+
+	p 
+		strong 大小设置：
+		|在 
+		code .pagination 
+		|的基础上添加类
+		code .pagination-sm
+		|或
+		code .pagination-lg 
+		|就可实现对分页导航大小的控制：
+	p 较小
+		code .pagination-sm
+		|： 
+		+pages("pagination pagination-sm")
+	p 默认状态
+		code .pagination-sm
+		|： 
+		+pages("pagination")
+
+	p 较大 
+		code .pagination-lg
+		|： 
+		+pages("pagination pagination-lg")
+
+	//-
+	h3.text-primary 9.10 翻页导航
+	p 只有“上一页”和”下一页“的翻页导航
+	p 
+		strong 实现步骤：
+		ol 
+			li 结构：
+				kbd ul>li>a 
+			li ul标签添加类
+				code .pager 
+	ul.pager 
+		li 
+			a(href="#") &laquo;上一页
+		li 
+			a(href="#") 下一页&raquo;
+	p 
+		strong 对齐样式：
+		|默认状态下，翻页导航居中显示，可以通过为li元素添加类实现居左/居右显示：
+		ol 
+			li 
+				code .previous 
+				|：居左
+			li 
+				code .next
+				|：居右
+	ul.pager
+		li.previous
+			a(href="#") &laquo;上一页
+		li.next 
+			a(href="#") 下一页&raquo;				
+	p 
+		strong 禁用状态：
+		|翻页导航没有激活状态，只有禁用状态。
+		span.text-warning 处于禁用状态时，需要通过js将a元素替换为span元素：
+		ul.pager
+			li.previous.disabled
+				span &laquo;上一页
+			li.next 
+				a(href="#") 下一页&raquo;	
+	//-
+	h3.text-primary 9.11 提示标签
+	p 有时需要为元素添加额外信息，如下图：
+		img(src="images/label.jpg", alt="").img-responsive
+	mixin label(cat)
+		p 鞋子
+			span(class=cat) 新品
+	p 
+		strong 实现：
+		|使用行内元素，为其添加类
+		code .label.label-default
+		|： 
+		+label("label label-default")
+	p 
+		strong 标签定制：
+		|将 
+		code .label-default
+		|替换为不同的类，可实现对提示标签样式的定制：
+		-var labels = [{cat: "label-default", desc: "默认标签，深灰色"}, {cat: "label-primary", desc: "主要标签，深蓝色"}, {cat: "label-success", desc: "成功标签，绿色"}, {cat: "label-info", desc: "信息标签，浅蓝色"}, {cat: "label-warning", desc: "警告标签，橙色"}, {cat: "label-danger", desc: "错误标签，红色"}]
+		table.table.table-hover.table-condesed.table-bordered.table-striped
+			thead
+				tr
+					th 类名
+					th 描述
+					th 效果
+			tbody
+				each label in labels 
+					tr 
+						td
+							code= ("." + label.cat) 
+						td= label.desc 
+						td 
+							+label("label " + label.cat)
+
+	//- 
+	h3.text-primary 9.12 徽章
+	p 与前面的提示标签功能相近，不过通常用来制作系统提示的消息。
+		span.text-warning 其样式根据父元素自动生成，不可自定义。
+	p 
+		strong 实现：
+		|为span标签添加类
+		code .badge
+		|：
+		ul.nav.nav-pills
+			li
+				a(href="#") 新消息
+					span.badge 1
+			li.active 
+				a(href="#") 已读
+					span.badge 2
+			li.disabled 
+				a(href="#") 未读
+					span.badge 120

@@ -1,0 +1,29 @@
+extends layout
+
+block title
+	title navbar-fixed demo 
+
+block content 
+	style.
+		body{
+			padding: 0;
+			margin: 0
+		}
+	nav(role="navigation").navbar.navbar-default.navbar-fixed-top
+		a(href="/").navbar-brand Title
+		ul.nav.navbar-nav
+			li.active
+				a(href="#") Home
+			li
+				a(href="#") Link
+
+	each i in [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+		p 网页正文内容，网页正文内容，网页正文内容，网页正文内容，网页正文内容，网页正文内容，网页正文内容，网页正文内容，网页正文内容。
+
+	nav(role="navigation").navbar.navbar-default.navbar-fixed-bottom
+		a(href="#").navbar-brand Title
+		ul.nav.navbar-nav
+			li.active
+				a(href="#") Home
+			li
+				a(href="#") Link

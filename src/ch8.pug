@@ -1,0 +1,156 @@
+extends layout
+
+block title
+	title 第八章 导航
+
+block content
+	h2.text-primary 第八章 导航
+
+	mixin nav (cat)
+		- var items = ["UI","前端", "后台"] 
+		ul(class=cat)
+			li.active
+				a(href="#") 主页
+			each item in items
+				li 
+					a(href="#") #{item}
+			li.disabled
+				a(href="#") 禁用
+
+	//- 
+	h3.text-primary 8.1 基础样式
+	p bootstrap实现导航效果主要通过类
+		code .nav 
+		|，不过仅有它不提供默认的导航样式，还要添加类
+		code .nav-tabs
+		|和
+		code .nav-pills
+		|等。
+		ul
+			li 仅有
+				code .nav 
+				|类： 
+				+nav("nav")
+			li 
+				code .nav.nav-tabs
+				|：
+				+nav("	nav nav-tabs")
+
+	//-
+	h3.text-primary 8.2 标签型tab导航（选项卡导航）
+	p 在
+		code .nav 
+		|的基础上添加类
+		code .nav-tabs 
+		|就可实现tab导航：
+	+nav("nav nav-tabs")
+
+	p 对于单个选项，如果需要显示为当前状态，&lt;li&gt;添加类
+		code .active 
+		|即可；如果为禁用状态，添加类
+		code .disabled
+		|即可：
+	ul.nav.nav-tabs
+		li 
+			a(href="#") 默认状态
+		li.active
+			a(href="#") 激活状态
+		li.disabled
+			a(href="#") 禁用状态
+
+	//- 
+	h3.text-primary 8.3 胶囊型导航
+	p 只需将
+		code .nav-tabs
+		|替换为
+		code .nav-pills
+		|即可:
+	+nav("nav nav-pills")
+
+	//- 
+	h3.text-primary 8.4 垂直堆叠导航
+	p 在
+		code .nav-pills
+		|基础上添加类
+		code .nav-stacked
+		|即可：
+		.containter
+			.row
+				.col-xs-1.col-sm-1.col-md-1.col-lg-1
+					+nav("nav nav-stacked nav-pills")
+	p 下拉菜单中可以通过添加类
+		code .divider
+		|添加分割线，同理，垂直堆叠导航也可以添加分割线，使用的类是：
+		code .nav-divider
+		|：
+		.row
+			.col-xs-1.col-sm-1.col-md-1.col-lg-1
+				ul.nav.nav-pills.nav-stacked
+					li 
+						a(href="#") 主页
+					li.nav-divider
+					li 
+						a(href="#") 关于
+
+	//- 
+	h3.text-primary 8.5 自适应导航
+	p 与使用
+		code .btn-group-justified
+		|制作自适应按钮一样，为导航添加类
+		code .nav-justified
+		|也可实现自适应（导航占据整个容器，各选项自适应）。
+		span.text-warning 要结合
+			code .nav-pills 
+			|或
+			code .nav-tabs
+			|一起使用:
+	+nav("nav nav-pills nav-justified")
+	p
+		strong 实现原理：
+		ol 
+			li &lt;ul&gt;元素width: 100%
+			li &lt;li&gt;元素display: table-cell
+			li 通过媒体查询，只有视窗宽度大于768px时才显示此效果
+
+	//- 
+	h3.text-primary 8.6 二级导航
+	p 
+		strong 基本结构：
+		kbd li.dropdown > (a.dropdown-toggle[data-toggle="dropdown"] > span.caret) + ul.dropdown-menu
+	ul.nav.nav-pills
+		li.active 
+			a(href="#") 主页
+		li.dropdown
+			a(href="#", data-toggle="dropdown").dropdown-toggle 教程
+				span.caret
+			ul.dropdown-menu
+				li 
+					a(href="#") CSS 
+				li 
+					a(href="#") bootstrap
+
+	h3.text-primary 8.7 面包屑导航
+	p 只需为列表加上类
+		code .breadcrumb
+		|即可，不需要
+		code .nav 
+		|和
+		code .nav-pills
+		|等。
+	p 
+		strong 注意：
+		ol 
+			li 由于源码使用了li+li:before选择器，所以不支持较低版本的ie。
+			li.text-warning 如果需要项目呈现
+				code .active
+				|或
+				code .disabled
+				|状态，文本不应该放在&lt;a&gt;签中，而是直接放在&lt;li&gt;标签中。
+	ul.breadcrumb
+		li.active
+			|激活
+		li 
+			a(href="#") 正常
+		li.disabled
+			|禁用
+
