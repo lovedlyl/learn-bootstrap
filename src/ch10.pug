@@ -1,0 +1,72 @@
+extends layout 
+
+block title 
+	title 第十章 警示框
+
+block content 
+	h2.text-primary 第十章 警示框
+	-var alerts = [{cat: "", content: "只有类.alert"}, {cat: "alert-success", content: "默认警示框"}, {cat: "alert-info", content: "信息警示框"}, {cat: "alert-warning", content: "警告警示框"}, {cat: "alert-danger", content: "危险警示框"}]
+	//- 
+	h3.text-primary 10.1 不同的警示框样式
+	mixin simple-alert(alert)
+		div(class="alert " + alert.cat) #{alert.content}
+	p 通过为div添加类
+		code .alert 
+		|可以初始化警示框，但不提供任何样式，还需要追加类来得到不同的样式
+		
+
+
+	table.table-hover.table-bordered.table-condensed.table-striped
+		thead
+			tr 
+				th 类名
+				th 作用
+				th 效果
+		tbody
+			each alert in alerts
+				tr 
+					td
+						code= ".alert." + alert.cat
+					td= alert.content
+					td 
+						+simple-alert(alert)
+	//- 
+	h3.text-primary 10.2 可关闭的警示框&times;
+	mixin dismissable-alert(alert)
+		div(class="alert " + alert.cat + " alert-dismissable") 
+			button(type="button", data-dismiss="alert").close &times;
+			| #{alert.content}
+	p
+		strong 实现步骤：
+		ol 
+			li 在
+				code .alert.alert-?
+				|基础上添加类
+				code .alert-dismissable
+			li 添加元素button, 设置类名
+				code .close 
+				|并增加属性data-dismiss="alert"（用于js检查属性以实现警示框关闭）
+	p 
+		strong 基本结构：
+		kbd .alert.alert-?.alert-dismissable > button[type=button, data-dismiss="alert"]{&times;} 
+
+	.row
+		each alert in alerts
+			.col-xs-2.col-sm-2.col-md-2.col-lg-2
+				+dismissable-alert(alert)
+
+	//- 
+	h3.text-primary 10.3 警示框中的链接
+	p 为了使警示框中的连接没有伪合感，为其添加类
+		code .alert-link
+		|可以看起来更舒适
+	p 
+		strong 没加的效果：
+		.alert.alert-info 成功：
+			a(href="#") 我是一个链接
+	p 
+		strong 添加后的效果：
+		.alert.alert-info 成功：
+			a(href="#").alert-link 我是一个链接
+
+

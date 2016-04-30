@@ -1,0 +1,146 @@
+extends layout
+
+block title 
+	title 第十一章 进度条
+
+block content 
+	h2.text-primary 第十一章 进度条
+
+
+	mixin progressbar(item)
+		.progress-bar(class=item.cat, role="progressbar", aria-valuenow=item.progress, aria-valuemin="0", aria-valuemax="100", style="width: " + item.progress + "%;")
+			span.sr-only #{"完成" + item.progress + "%"}
+			if (item.withNumber)
+				| #{"已完成" + item.progress + "%"}
+
+	mixin progress(item)
+		if (item.striped)
+			if (item.active)
+				.progress(class="progress-striped active")
+					+progressbar(item)
+			else 
+				.progress(class="progress-striped")
+					+progressbar(item)
+		else
+			.progress
+				+progressbar(item)
+
+	//- 
+	h3.text-primary 10.1 基本样式
+	p 
+		strong 实现原理：
+		|类为
+		code .progress
+		|的div中嵌入类为
+		code .progress-bar
+		|的div，对其设置内联样式宽度即可。
+	p 
+		strong 基本结构：
+		kbd .progress > .progress-bar(style="width: ??%")
+		.progress
+			.progress-bar(style="width: 30%")
+	p 
+		strong 结构优化：
+		|为了方便视觉障碍者，可以将结构优化
+		pre 
+			|&lt;div class="progress"&gt;
+			|	&lt;div class="progress-bar" style="width:40%;" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"&gt;
+			|		&lt;span class="sr-only"&gt;已完成40% &lt;/span&gt;
+			|	&lt;/div&gt;
+			|&lt;/div>		
+		ol 
+			li role: 告诉搜索引擎这个div的作用是进度条
+			li aria-valuenow: 当前进度
+			li aria-valuemin: 进度条最小值
+			li aria-valuemax: 进度条最大值
+			li span.sc-only: 读取当前进度
+
+	//- 
+	h3.text-primary 10.2 彩色进度条
+	p 同警示框一样，在
+		code .progress-bar
+		|的基础上添加不同的类，可以为其设置不同的颜色：
+	table.table.table-hover.table-bordered.table-striped.table-condensed
+		thead
+			tr
+				th 类 
+				th 描述
+				th 效果
+		tbody
+			tr
+				td 
+					code .progress-bar
+				td 默认效果
+				td 
+					+progress({cat: "", progress: 30, striped: true})
+			tr 
+				td 
+					code .progress-bar.progress-bar-info
+				td 表示信息进度条，进度条颜色为蓝色
+				td 
+					+progress({cat: "progress-bar-info", progress: 40})
+			tr
+				td 
+					code .progress-bar.progress-bar-success
+				td 表示成功进度条，进度条颜色为绿色
+				td 
+					+progress({cat: "progress-bar-success", progress: 70})
+			tr
+				td 
+					code .progress-bar.progress-bar-warning
+				td 表示警告进度条，进度条颜色为黄色
+				td 
+					+progress({cat: "progress-bar-warning", progress: 50})
+			tr
+				td 
+					code .progress-bar.progress-bar-danger
+				td 表示错误进度条，进度条颜色为红色
+				td 
+					+progress({cat: "progress-bar-danger", progress: 60})
+
+	//- 
+	h3.text-primary 10.3 带条纹的进度条
+	p 在外层div
+		code .progress
+		|基础上添加类
+		code .progress-striped
+		|后，bootstrap就可使用css3的
+		span.text-muted 线性渐变
+		|给进度条添加条纹效果
+	+progress({cat: "progress-bar-danger", progress: 44, striped: true})
+
+	//- 
+	h3.text-primary 10.4 条纹进度条动起来
+	p 在
+		code .progress-striped
+		|的基础上添加类 
+		code .progress-active
+		|就可使带条纹的进度条动起来：
+	+progress({cat:"progress-bar-danger", progress: 440, striped: true, active: true})
+
+	//- 
+	h3.text-primary 10.4 叠层进度条
+	p 可以将多个进度条水平排列，只需将多个
+		code .progress-bar
+		|放置在
+		code .progress
+		|中即可。
+	p.text-warning
+		strong 注意：
+		|所有进度条的宽度之和不能超过100%
+	.progress.active.progress-striped
+		+progressbar({cat: "", progress: 20}) 
+		+progressbar({cat: "progress-bar-danger", progress: 30})
+		+progressbar({cat: "progress-bar-success", progress: 50})
+
+	//- 
+	h3.text-primary 10.5 为进度条添加数值
+	p 只需将数值内容作为
+		code .progress-bar
+		|的文本内容即可。它会自动居中。
+	+progress({cat: "progress-bar-danger", progress: 44, withNumber: true, striped: true, active: true})
+
+	p 
+		strong 当进度为0%是：
+		|整个进度条消失，如果需要显示进度条，可以为其设置一个非常小的进度，比如0.1（0.01也会消失）
+	+progress({cat: "progress-bar-danger", progress: 0.1, withNumber: true, striped: true, active: true})
