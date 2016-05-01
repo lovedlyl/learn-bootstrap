@@ -1,0 +1,141 @@
+extends layout
+
+block title
+	title 第十四章 面板
+
+block content
+	include bootstrap-engin
+
+	mixin myPanel()
+		.panel(class!=attributes.class)
+			.panel-heading 面板头部
+			.panel-body 面板内容区
+				if block 
+					block
+			.panel-footer 面板底部
+
+	h2.text-primary 第十四章 面板
+
+	p.lead 主要作用就是用来处理一些其他组件无法完成的功能。
+
+	//- 
+	h3.text-primary 14.1 基础面板
+	p 基础面板非常简单，给一个div添加类
+		code .panel
+		|，生成一个具有边框的文本显示块。但其不控制主题颜色，所以还要在此基础上添加类
+		code .panel-default
+		|。再在其内部添加类为
+		code .panel-body
+		|的div即可：
+	ul.list-unstyled
+		li 只有类
+			code .panel 
+			|的面板：
+			.panel
+				.panel-body 我是一个面板
+		li 添加类
+			code .panel-default
+			|后：
+			.panel.panel-default
+				.panel-body
+					|基础面板
+	//- 
+	h3.text-primary 14.2 带头和尾的面板
+	p 可以使用类
+		code .panel-heading
+		|和
+		code .panel-footer
+		|为面板添加头尾：
+		+myPanel().panel-default
+	
+	//- 
+	h3.text-primary 14.3 彩色面板
+	p 可以将
+		code .panel-default
+		|替换为
+		code .panel-danger
+		|等类，实现对面板
+		span.text-muted 背景色，文本和边框颜色的改变：
+
+	+table2({headers: ["类", "功能", "效果"]}).table-bordered
+		tr 
+			td 
+				code .panel-default
+			td 默认样式
+			td 
+				+myPanel().panel-default
+		tr 
+			td 
+				code .panel-info 
+			td 信息
+			td 
+				+myPanel().panel-info
+		tr 
+			td 
+				code .panel-success
+			td 成功
+			td 
+				+myPanel().panel-success
+		tr 
+			td 
+				code .panel-warning
+			td 警告
+			td 
+				+myPanel().panel-warning
+		tr 
+			td 
+				code .panel-danger
+			td 危险
+			td 
+				+myPanel().panel-danger
+
+	//- 
+	h3.text-primary 14.4 面板嵌套（表格）
+	p.text-muted 面板主体内容
+		code .panel-body
+		|中会经常嵌套其它内容, 如图片，表格，列表等。
+		strong 下面以面板中嵌套表格为例：
+	+myPanel().panel-default
+		+table2({headers: ["#", "我的笔记", "时间"]}).table-bordered
+			tr 
+				td 1 
+				td bootstrap 
+				td 2016.04
+	p 如果不想表格与底部有间隔，可以将
+		code .table 
+		|与
+		code .panel-body
+		|放在统一级（其它嵌入内容希望达到此种效果，也可以这样做）：
+	.panel.panel-default
+		.panel-heading 面板头部
+		.panel-body 面板主体内容
+		+table2({headers: ["#", "我的笔记", "时间"]}).table-bordered
+			tr 
+				td 1 
+				td bootstrap 
+				td 2016.04
+		.panel-footer 面板底部
+	p.text-warning bootstrap对面板中嵌套的表格做了优化，不会有边框重叠。
+
+	//- 
+	h3.text-primary 14.4 面板嵌套（列表项）
+	p 与面板中嵌套表格相同：
+	.panel.panel-default
+		.panel-heading 面板头部
+		.panel-body 面板主体内容
+			ul.list-group
+				li.list-group-item Item 1
+				li.list-group-item Item 2
+				li.list-group-item Item 3
+		.panel-footer 面板底部
+	p 如果不希望与底部有距离，也是将列表项放置在
+		code .panel-body
+		|同一级：
+	.panel.panel-default
+		.panel-heading 面板头部
+		.panel-body 面板主体内容
+		ul.list-group
+			li.list-group-item Item 1
+			li.list-group-item Item 2
+			li.list-group-item Item 3
+		.panel-footer 面板底部
