@@ -1,14 +1,13 @@
 extends layout
 
 block content
-	p
+	p.lead
 		|根据
 		strong
 			a.text-muted(href="http://www.imooc.com/learn/141", target="_blank") 幕课网玩转Bootstrap（基础）
 		|整理。
 
-	ul.list-unstyled
-			each chapter in chapters.slice(1)
-				li 
-					a(href=chapter.url) #{chapter.name}：#{chapter.desc}
+	div.list-group
+			each chapter in chapters.slice(1) 
+					a(href=chapter.url).list-group-item #{chapter.name}：#{chapter.desc}
 

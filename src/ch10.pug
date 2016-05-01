@@ -4,12 +4,13 @@ block title
 	title 第十章 警示框
 
 block content 
+	include bootstrap-engin
 	h2.text-primary 第十章 警示框
-	-var alerts = [{cat: "", content: "只有类.alert"}, {cat: "alert-success", content: "默认警示框"}, {cat: "alert-info", content: "信息警示框"}, {cat: "alert-warning", content: "警告警示框"}, {cat: "alert-danger", content: "危险警示框"}]
+	-var alerts = [{cat: "", content: "只有类.alert"}, {success: true, cat: "alert-success", content: "成功警示框"}, {info: true, cat: "alert-info", content: "信息警示框"}, {warning: true, cat: "alert-warning", content: "警告警示框"}, {danger: true, cat: "alert-danger", content: "危险警示框"}]
 	//- 
 	h3.text-primary 10.1 不同的警示框样式
-	mixin simple-alert(alert)
-		div(class="alert " + alert.cat) #{alert.content}
+	//- mixin simple-alert(alert)
+	//- 	div(class="alert " + alert.cat) #{alert.content}
 	p 通过为div添加类
 		code .alert 
 		|可以初始化警示框，但不提供任何样式，还需要追加类来得到不同的样式
@@ -29,13 +30,12 @@ block content
 						code= ".alert." + alert.cat
 					td= alert.content
 					td 
-						+simple-alert(alert)
+						+alert(alert)
+							| #{alert.content}
+
+
 	//- 
 	h3.text-primary 10.2 可关闭的警示框&times;
-	mixin dismissable-alert(alert)
-		div(class="alert " + alert.cat + " alert-dismissable") 
-			button(type="button", data-dismiss="alert").close &times;
-			| #{alert.content}
 	p
 		strong 实现步骤：
 		ol 
@@ -49,11 +49,15 @@ block content
 	p 
 		strong 基本结构：
 		kbd .alert.alert-?.alert-dismissable > button[type=button, data-dismiss="alert"]{&times;} 
+	
+
 
 	.row
 		each alert in alerts
 			.col-xs-2.col-sm-2.col-md-2.col-lg-2
-				+dismissable-alert(alert)
+				-alert.dismissable = true
+				+alert(alert)
+					| #{alert.content}
 
 	//- 
 	h3.text-primary 10.3 警示框中的链接
@@ -62,11 +66,14 @@ block content
 		|可以看起来更舒适
 	p 
 		strong 没加的效果：
-		.alert.alert-info 成功：
+		+alert({cat: "alert-info"})
+			|成功：
 			a(href="#") 我是一个链接
+
 	p 
 		strong 添加后的效果：
-		.alert.alert-info 成功：
+		+alert({cat: "alert-info"})
+			| 成功：
 			a(href="#").alert-link 我是一个链接
 
 

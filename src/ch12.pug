@@ -1,0 +1,157 @@
+extends layout
+
+block title 
+	title 第十二章 媒体对像
+
+block content 
+	include bootstrap-engin 
+	h2.text-primary 第十二章 媒体对像
+
+	//- 
+	h3.text-primary 12.1 媒体对象 
+	p 在网页中经常看见如下图的布局，bootstrap将这种结构抽离为了媒体对象：
+	img(src="images/media.jpg", alt="").img-responsive
+	//- 
+	h3.text-primary 12.2 默认媒体对象
+	p 基本结构：
+		kbd .media > (a.media-left[href="..."]> img.media-object) + (.media-body > .media-heading + ...)
+	+table({bordered: true, striped: true, hover: true, headers: ["类", "名称", "作用"]})
+		tr 
+			td 
+				code .media 
+			td 媒体对象容器
+			td 容纳整个媒体对象
+		tr 
+			td 
+				code .media-object
+			td 媒体对象的对象
+			td 媒体对象的对象，常常是图片
+		tr 
+			td 
+				code .media-body
+			td 媒体对象内容
+			td 媒体对象主体内容，常常位于图片右侧
+		tr 
+			td 
+				code .media-heading
+			td 媒体对象标题
+			td 描述媒体对象的标题
+	p 可以参考下图：
+		img(src="images/media-desc.jpg", alt="").img-responsive
+	
+	//- 
+	h3.text-primary 12.3 媒体对象组件对齐方向
+	p 以下所说的图像组建指的是
+		code img.media-object 
+		|的父元素&lt;a&gt;；主体组建指
+		code .media-body
+	p
+		strong 水平方向 ：
+		|为图像组建或主体组件其中添加类
+		code .media-left 
+		|或
+		code .media-right
+		|可使其处于块左边或右边（没有默认状态，每次都要添加）
+		ul 
+			li 
+				strong 图像在左：
+				+media({imageUrl: "images/muke.jpg"})
+					h4.media-heading 慕课网
+					p 我在慕课网学习bootsrap
+			li 
+				strong 图像在右：
+				+media({"imageUrl": "images/muke.jpg", imageRight: true})
+					h4.media-heading 慕课网
+					p 我在慕课网学习bootsrap
+	p 
+		strong 垂直方向：
+		|默认为顶部对齐，可以为图像组建添加类
+		code .media-top
+		|，
+		code .media-middle
+		|或
+		code .media-bottom
+		|实现垂直方向的对齐，下面以图像组件为例（主体组件同理）：				
+		ul 
+			li 
+				strong 图像组件不声明垂直对齐方式（顶部对齐）：
+				+media({imageUrl: "images/muke.jpg"})
+					h4.media-heading 慕课网
+					p 我在慕课网学习bootsrap
+						br 
+						|我在慕课网学习bootsrap,
+						br 
+						|我在慕课网学习bootsrap, 
+						br 
+						|我在慕课网学习bootsrap,
+			li 
+				strong 垂直居中：
+				+media({imageUrl: "images/muke.jpg", imageMiddle: true})
+					h4.media-heading 慕课网
+					p 我在慕课网学习bootsrap
+						br 
+						|我在慕课网学习bootsrap,
+						br 
+						|我在慕课网学习bootsrap, 
+						br 
+						|我在慕课网学习bootsrap,
+			li 
+				strong 底部对齐：
+				+media({imageUrl: "images/muke.jpg", imageBottom: true})
+					h4.media-heading 慕课网
+					p 我在慕课网学习bootsrap
+						br 
+						|我在慕课网学习bootsrap,
+						br 
+						|我在慕课网学习bootsrap, 
+						br 
+						|我在慕课网学习bootsrap,				
+
+	//- 
+	h3.text-primary 12.4 嵌套媒体对象
+	p 嵌套媒体对象主要应用于系统评论，如下图：
+		img(src="images/comments.jpg", alt="").img-responsive
+	p 
+		strong 实现方法：
+		|将
+		code .media 
+		|放置在上层的
+		code .media-body
+		|内即可实现：
+	+media({url: "#", imageUrl: "images/damo.jpg"})
+		h4.media-heading 我是大漠
+		p 我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例
+		+media({imageUrl: "images/muke.jpg"})
+			h4.media-heading 慕课网
+			p 大漠写的《玩转Bootstrap》系列教程即将会在慕课网上发布
+			+media({imageUrl: "images/w3c.jpg"})
+				h4.media-heading W3cplus 
+				p W3cplus站上还有很多教程...		
+
+	//- .row 
+	//- 	.col-xs-5.col-sm-5.col-md-5.col-lg-5
+	//- 		+media({url:"#", imageUrl: "images/10.jpg", imageRight: alse})
+	//- 			h4.media-heading 系列：十天精通CSS3
+	//- 			p 全方位深刻详解CSS3模块知识，经典案例分析，代码同步调试，让网页穿上绚丽装备	
+
+
+	//- 
+	h3.text-primary 12.5 媒体对象列表
+	p 
+		strong 实现方法：
+		|使用无序列表ul，添加类
+		code .media-list
+		|再将
+		code .media 
+		|作为列表项即可：
+		kbd .media-list > li.media * ?
+	ul.media-list 
+		+media({url: "#", imageUrl: "images/damo.jpg", imageBottom: true, inList: true})
+			h4.media-heading 我是大漠
+			p 我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例我是W3cplus站长大漠，我在写Bootstrap框中的媒体对象测试用例
+		+media({imageUrl: "images/muke.jpg", inList: true})
+			h4.media-heading 慕课网
+			p 大漠写的《玩转Bootstrap》系列教程即将会在慕课网上发布
+		+media({imageUrl: "images/damo.jpg", bodyMiddle: true, inList: true})
+			h4.media-heading W3cplus 
+			p W3cplus站上还有很多教程...

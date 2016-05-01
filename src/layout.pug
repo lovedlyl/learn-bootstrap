@@ -13,18 +13,22 @@ html(lang="en")
 		style.
 			body{margin: 20px 0}
 	body.col-xs-10.col-sm-10.col-md-10.col-lg-10.col-xs-offset-1.col-sm-offset-1.col-md-offset-1.col-lg-offset-1
+		.page-header
+			h1.text-primary Bootstrap 学习笔记
+					
 		.navbar.navbar-inverse
 			.navbar-header
 				button(type="button", data-toggle="collapse", data-target=".navbar-responsive-collapse").btn.btn-default.navbar-toggle 
 					span.sr-only Toggle Navigation
 					each i in [1,2,3]
 						span.icon-bar
-				span.navbar-brand B 学习笔记
+				//- span.navbar-brand B 学习笔记
 			.collapse.navbar-collapse.navbar-responsive-collapse
 				ul.nav.navbar-nav.nav-pills
 					each chapter in chapters
 						li 
 							a(href=chapter.url) #{chapter.name}
+
 
 		block content
 		hr
