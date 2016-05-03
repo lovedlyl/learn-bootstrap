@@ -4,6 +4,7 @@ block title
 	title 第五章 图像
 
 block content
+	include bootstrap-engin
 	h2.text-primary 第五章 图像
 
 	h3.text-primary 5.1 图片
@@ -44,7 +45,8 @@ block content
 		strong 
 			a(href="http://glyphicons.com/", target="_blank") glyphicons.com
 		|。可免费使用。
-	img(src="images/icons.jpg").img-responsive
+	+imageModal("images/icons.jpg")
+	//- img(src="images/icons.jpg").img-responsive
 	p 
 		span.text-muted 任何内联元素都可以用来制作小图标。
 		|使用时需要添加类

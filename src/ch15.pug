@@ -1,0 +1,511 @@
+extends layout
+
+block title 
+	title 第十五章 模态弹出框
+
+block content 
+
+	include bootstrap-engin
+
+	mixin showModal(src)
+		button(type="button", data-toggle="modal", data-target=src).btn.btn-primary
+			if block 
+				block
+
+
+	h2.text-primary 第十五章 模态弹出框
+
+	//- 
+	h3.text-primary 15.1 导入JavaScript插件
+	p 可以一次性导入所有插件，文件为
+		span.text-warning bootstrap.min.js
+		|或
+		span.text-warning bootstrap.js
+	p.text-danger 导入bootstrap插件前，一定导入jquery。
+	p 也可以单独导入不同功能的插件，它们分别为：
+	+table2({headers: ["作用", "对应文件"]}).table-bordered.table-condensed.table-hover
+		tr 
+			td 动画过渡（Transitions）
+			td.text-warning transition.js
+		tr 
+			td 模态弹窗（Modal）
+			td.text-warning modal.js
+		tr 
+			td 下拉菜单（Dropdown）
+			td.text-warning dropdown.js
+		tr 
+			td 滚动侦测（Scrollspy）
+			td.text-warning scrollspy.js
+		tr 
+			td 选项卡（Tab）
+			td.text-warning tab.js
+		tr 
+			td 提示框（Tooltips）
+			td.text-warning tooltop.js
+		tr 
+			td 弹出框（Popover）
+			td.text-warning popover.js
+		tr 
+			td 警告框（Alert）
+			td.text-warning alert.js
+		tr 
+			td 按钮（Buttons）
+			td.text-warning button.js
+		tr 
+			td 折叠/手风琴（Collapse）
+			td.text-warning collapse.js
+		tr 
+			td 图片轮播Carousel
+			td.text-warning carousel.js
+		tr 
+			td 自动定位浮标Affix
+			td.text-warning affix.js
+
+	//- 
+	h3.text-primary 15.2 动画过渡（Transitions）
+	p 依赖此模块的模块有：
+		ol 
+			li 模态弹窗（Modal）
+			li 选项卡（Tab）
+			li 警告框（Alert）
+			li 图片轮播（Carousel）
+	p.text-danger 使用了
+		strong CSS3
+		|来实现，所以
+		strong IE6-IE8
+		|并不支持。
+
+	//- 
+	h3.text-primary 15.3 模态弹窗（Modal）
+	p
+		strong bootstrap将弹出框统一称作Modal，即点击一个按钮，弹出一个框，这个框可能是一段文字，可能包含按钮，也可能时图片。
+		+showModal("#modal1")
+			|查看效果
+
+	//- 
+
+	h3.text-primary 15.4 结构分析
+	p 
+		strong 基本结构：
+		kbd .modal > .modal-dialog > .modal-content > (.modal-header > .modal-title + .modal-body + .modal-footer)
+	+table2({headers: ["类", "功能"], responsive: true}).table-bordered.table-hover
+		tr 
+			td 
+				code .modal 
+			td 包含整个对话框
+		tr 
+			td 
+				code .modal-dialog
+			td 包含整个对话框
+		tr
+			td 
+				code .modal-content
+			td 放置整个对话框的内容
+		tr 
+			td 
+				code .modal-header
+			td 包含标题
+				code .modal-title
+				|和关闭按钮
+		tr 
+			td 
+				code .modal-body
+			td 对话框主要内容
+		tr 
+			td 
+				code .modal-footer
+			td 放置操作按钮 
+
+	//- 
+	h3.text-primary 15.5 实现原理1
+	p bootstrap的模态弹出框有以下几个特点：
+		+showModal("#modal1")
+			|点击查看
+	ol 
+		li 固定在浏览器中，
+			span.text-muted 注意通过top/right/bottom/left都设置为0实现填满浏览器：
+			pre 
+				|.modal {
+				|	position: fixed;
+				|	top: 0;
+				|	right: 0;
+				|	bottom: 0;
+				|	left: 0;
+				|	z-index: 1050;
+				|	display: none;
+				|	overflow: hidden;
+				|	-webkit-overflow-scrolling: touch;
+				|	outline: 0;
+				|}
+		li 
+			code .modal 
+			|宽度自适应，而
+			code .modal-dialog
+			|水平居中：
+			pre
+				|.modal-dialog {
+				|	position: relative;
+				|	width: auto;
+				|	margin: 10px;
+				|}
+		li 当视窗宽度大于768px时，
+			code .modal-dialog
+			|宽度为600px：
+			pre 
+				|@media (min-width: 768px) {
+				|    .modal-dialog {
+				|        width: 600px;
+				|        margin: 30px auto;
+				|    }
+				|    .modal-content {
+				|        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+				|                        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+				|    }
+				|    .modal-sm {
+				|        width: 300px;
+				|    }
+				|}
+
+	//- 
+	h3.text-primary 15.6 实现原理2
+	p 当弹框出现时，整个页面会被黑色层遮套，这是因为bootstrap通过js在
+		code .modal 
+		|中注入了类为
+		code .modal-backdrop
+		|的元素，其与
+		code .modal-content
+		|同级，样式为：
+	pre 
+		|.modal-backdrop {
+		|	position: fixed;
+		|	top: 0;
+		|	right: 0;
+		|	bottom: 0;
+		|	left: 0;
+		|	z-index: 1040;
+		|	background-color: #000;
+		|}	
+	p 同时，将其类从
+		code .fade 
+		|过渡到
+		code .in
+		|使其具有动画效果：
+		+showModal("#modal1")
+			|观察遮套层是否有动画效果（好像不明显）
+	pre 
+		|.modal-backdrop.fade {
+		|	filter: alpha(opacity=0);
+		|	opacity: 0;
+		|}
+		|.modal-backdrop.in {
+		|	filter: alpha(opacity=50);
+		|	opacity: .5;
+		|}	
+	p 
+		strong 定制弹框大小：
+		|在
+		code .modal-dialog
+		|基础上添加类
+		code .modal-sm 
+		|或
+		code .modal-lg 
+		|可获得更大或更小的弹框：
+	ul.list-inline
+		li 
+			+showModal("#modal1")
+				|正常弹框大小
+		li 
+			+showModal("#modal-sm")
+				|小弹框
+		li 
+			+showModal("#modal-lg")
+				|大弹框
+
+
+	//- 
+	h3.text-primary 15.7 实现弹框弹出的2种方法
+	ol 
+		li 使用&lt;button&gt;元素
+			pre 
+				|&lt;button type="button" data-toggle="modal" data-target="#mymodal" class="btn btn-primary"&gt;点击我会弹出模态弹出窗&lt;/button&gt;
+		li 使用&lt;a&gt;元素
+			pre 
+				|&lt;a data-toggle="modal" href="#mymodal" class=" btn btn-primary" &gt;点击我会弹出模态弹出窗&lt;/a&gt;
+	p 这两种方法都需要设置元素本身的
+		span.text-warning data-toggle
+		|属性为
+		span.text-warning "modal"
+		|。
+	p 使用&lt;button&gt;元素时，需要设置其
+		span.text-warning data-target
+		|属性为可选择到弹框的CSS选择器，比如ID值。
+		br 
+		|而使用&lt;a&gt;元素时可以用自身的
+		span.text-warning href 
+		|属性替代
+		span.text-warning data-target
+
+
+	//- 
+	h3.text-primary 15.8 弹出时的动画效果
+	p 默认状态下，所有类为
+		code .modal 
+		|的元素都隐藏，点击相应按钮时弹出。如果需要弹出时有动画效果，可以在
+		code .modal 
+		|的基础上追加类
+		code .fade
+		|：
+		+showModal("#modal-fade")
+			|弹出时有动画效果
+
+
+	//- 
+	h3.text-primary 15.9 模态弹出框使用（data-参数说明）
+	p 除data-toggle和data-target属性外，还可以通过其它属性实现对弹出框的控制：
+	.container
+		.row 
+			.col-xs-12.col-sm-12.col-md-12.col-lg-12
+				+table2({headers: ["属性名称","类型","默认值","描述", "备注"], responsive: true}).table-bordered.table-hover.table-striped
+					tr 
+						td data-toggle
+						td 字符串
+						td modal 
+						td 用来控制弹出框的显示
+						td 必须定义的一个属性，而且必须是
+							span.text-warning modal 
+							//- span.text-warning	
+					tr
+						td data-target
+						td 字符串
+						td 用户自定义
+						td 用来确定触发时弹出哪个模态框，其值可以是“div.modal”独有的类名或ID名
+						td 必须定义的一个属性，而且必须是“div.modal”上独有的类名或ID名
+					tr 
+						td data-backdrop
+						td 布尔值
+						td true
+						td 是否包含背景div，如果为真，单击该背景时关闭弹窗。如果为
+							span.text-warning static
+							|单击该背景时不会关闭弹窗
+						td
+							.btn-group-vertical
+								button(type="button",data-target="#modal-fade1", data-toggle="modal", data-backdrop="static").btn.btn-primary 点击背景不会关闭
+								button(type="button",data-target="#modal-fade2", data-toggle="modal", data-backdrop="false").btn.btn-primary 没有遮套层
+					tr 
+						td data-keyboard
+						td 布尔值
+						td true 
+						td 按键盘ESC键是否关闭弹框，如果为false则无法通过ESC键关闭弹窗
+						td 
+							button(type="button",data-target="#modal-fade3", data-toggle="modal", data-keyboard="false").btn.btn-primary 不能用ESC键关闭
+							p.text-danger 测试不能成功，是不是一个页面有多个弹框的原因？
+					tr 
+						td data-show 
+						td 布尔值
+						td true
+						td.text-warning 模态框初始化之后就立即显示出来。???
+						td 
+							button(type="button",data-target="#modal-fade3", data-toggle="modal", data-show=true).btn.btn-primary 没有遮套层
+					tr 
+						td data-remote
+						td URL路径
+						td 空值
+						td 如果提供的是 URL，将利用 jQuery 的 load 方法从此 URL 地址加载要展示的内容（只加载一次）并插入
+							br
+							code .modal-content
+							|内。
+							br
+							|如果使用的是 data 属性 API，还可以利用 href 属性指定内容来源地址
+							br
+							|。下面是一个实例：
+							pre 
+								|&lt;a data-toggle="modal" href="remote.html" 
+								br
+								|data-target="#modal"&gt;Click me&lt;/a&gt;				
+							p.text-warning 将在V4中废除，到时可以自己用jQuery实现。
+						td 
+							button#modal10(type="button",data-target="#modal-fade10", data-toggle="modal", data-remote="modal.html").btn.btn-primary 外来弹框			
+							p.text-warning 暂时没有验证
+
+	//- 
+	h3.text-primary 15.10 JS触发弹框
+	p 除了自定义属性触发弹框外，还可以通过JS触发弹框，比如给一个元素添加单击事件。再调用
+		span.text-info modal()
+		|方法。比如：
+	pre 
+		|&lt;button class="btn btn-default" type="button" id="click1"&gt;JS触发弹框&lt;/button&gt; 
+		|&lt;div class="modal" id="modal-lg"&gt;
+		|	....
+		|&lt;div&gt;
+		|&lt;script&gt;
+		|$(function() {
+		|	$("#click1").click(function() {
+		|		$("#modal-lg").modal()
+		|	})
+		|})		
+	button(type="button")#click1.btn.btn-primary JS触发弹框
+	script.
+		$(function(){
+			$("#click1").click(function(){
+				$("#modal-lg").addClass("fade").modal({keyboard: true, backdrop: "static"})
+				})
+			})
+	p 
+		strong 参数说明：
+	+table2({headers: ["属性","类型","默认值","描述","备注"], responsive: true}).table-bordered.table-striped
+		tr 
+			td backdrop
+			td 布尔值
+			td true
+			td 是否包含背景div，如果为真，单击该背景时关闭弹窗。
+				br
+				|如果为static，单击背景时不会关闭弹框
+			td 相当于自定义属性中的data-backdrop
+		tr
+			td keyboard
+			td 布尔值
+			td true
+			td 按键盘ESC键是否关闭弹框，如果为false则无法通过ESC键关闭弹窗
+			td 相当于自定义属性中的data-keyboard
+		tr
+			td show
+			td 布尔值
+			td true
+			td 弹框初始化时，是否弹出
+			td 相当于自定义属性中的data-show
+		tr 
+			td remote
+			td URL
+			td 空值
+			td 相当于a链接中的href属性。
+
+	//- 
+	h3.text-primary 15.10 JS触发时其它参数设置
+	p 
+		strong 参数设置：
+		|bootstrap还为模态弹框提供了另外3种参数（好像不可以和上一节的参数混用）
+	+table2({headers: ["参数", "使用方法", "描述"]}).table-bordered
+		tr 
+			td toggle
+			td 
+				pre $("#mymodal").modal("toggle")
+			td 触发时如果是关闭，则显示，反之则关闭
+		tr 
+			td show 
+			td 
+				pre $("#mymodal").modal("show")
+			td 触发时显示弹框
+		tr 
+			td hide 
+			td 
+				pre $("#mymodal").modal("hide")
+			td 触发时关闭弹框
+
+	p 
+		strong 事件设置：
+		|模态弹框还支持4种模拟事件，弹出前，弹出后，关闭前，关闭后
+	p 调用方法：
+	pre $("#mymodal").on("hide.bs.modal", function(){.....})
+
+	+table2({headers:["事件类型", "描述"]})
+		tr 
+			td show.bs.modal 
+			td 显示前执行。
+				span.text-warning 如果单击了一个元素，那么该元素将作为事件的relatedTarget属性（好像不对）
+		tr 
+			td shonw.bs.modal 
+			td 弹框出现后执行。
+				span.text-warning 如果单击了一个元素，那么该元素将作为事件的relatedTarget属性（好像不对）
+		tr 
+			td hide.bs.modal 
+			td 弹框隐藏前执行
+		tr 
+			td hidden.bs.modal 
+			td 弹框隐藏后执行
+	button(type="button")#click2.btn.btn-primary JS触发弹框2
+	script.
+		$(function(){
+			$("#click2").click(function(){
+				$("#modal-fade").modal({backdrop: false})
+				})
+			$("#modal-fade").on("show.bs.modal", function(e){
+				//console.log(this.relatedTarget)
+				alert("before show")
+				})
+			$("#modal-fade").on("shown.bs.modal", function(){
+				alert("after show")
+				})
+
+			$("#modal-fade").on("hide.bs.modal", function(){
+				alert("before hide")
+				})
+
+			$("#modal-fade").on("hidden.bs.modal", function(){
+				alert("after hide")
+				})
+
+
+			$("#shit").click(function(){
+				$("#modal-fade").modal("toggle")
+				})
+			})
+	//- -------------------------------------------------------------------------------------
+	#demo1
+		#modal1.modal
+			.modal-dialog
+				.modal-content
+					.modal-header
+						+X("modal")
+						h4.modal-title 模拟弹窗标题
+					.modal-body
+						p 模拟弹窗主体内容
+					.modal-footer
+						button(type="button", data-dismiss="modal").btn.btn-default 关闭
+						button(type="button").btn.btn-primary 保存
+		#modal-sm.modal
+			.modal-dialog.modal-sm
+				.modal-content
+					.modal-header
+						+X("modal")
+						h4.modal-title 模拟弹窗标题
+					.modal-body
+						p 模拟弹窗主体内容
+					.modal-footer
+						button(type="button", data-dismiss="modal").btn.btn-default 关闭
+						button(type="button").btn.btn-primary 保存
+		#modal-lg.modal
+			.modal-dialog.modal-lg
+				.modal-content
+					.modal-header
+						+X("modal")
+						h4.modal-title 模拟弹窗标题
+					.modal-body
+						p 模拟弹窗主体内容
+					.modal-footer
+						button(type="button", data-dismiss="modal").btn.btn-default 关闭
+						button(type="button").btn.btn-primary 保存													
+
+		#modal-fade.modal.fade
+			.modal-dialog
+				.modal-content
+					.modal-header
+						+X("modal")
+						h4.modal-title 模拟弹窗标题
+						button(type="button")#shit.btn.btn-default 点我也关闭
+					.modal-body
+						p 模拟弹窗主体内容
+					.modal-footer
+						button(type="button", data-dismiss="modal").btn.btn-default 关闭
+						button(type="button").btn.btn-primary 保存
+		each i in [1, 2, 3, 4, 5]
+			.modal.fade(id="modal-fade" + i)
+				.modal-dialog
+					.modal-content
+						.modal-header
+							+X("modal")
+							h4.modal-title 模拟弹窗标题 #{i}
+						.modal-body
+							p 模拟弹窗主体内容
+						.modal-footer
+							button(type="button", data-dismiss="modal").btn.btn-default 关闭
+							button(type="button").btn.btn-primary 保存																	

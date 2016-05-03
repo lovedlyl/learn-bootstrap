@@ -38,6 +38,23 @@ mixin badge(content)
 		if block 
 			block
 
+mixin imageModal(url)
+	-var ID = "imageModal" + parseInt(Math.random() * 10)
+	div
+		.container
+			.row
+				.col-xs-3.col-sm-3.col-md-3.col-lg-3
+					img(src=url, alt="").img-responsive 
+					button(type="button", data-toggle="modal", data-target="#" + ID).btn.btn-info 查看大图
+	.modal.fade(id=ID)
+		.modal-dialog.modal-lg 
+			.modal-content
+				.modal-header
+					+X("modal")
+				.modal-body
+					img(src=url, alt="").img-responsive
+
+
 //- 
 	oprions.info|success|warning|danger: 警示框类别 progress-bar-info progress-bar-success progress-bar-warning progress-bar-danger
 	options.progress: 当前进度 数值 20 30...
@@ -158,7 +175,8 @@ mixin table2(options)
 				thead
 					tr 
 						each head in options.headers 
-							td= head 
+							td
+								strong= head 
 				if block
 					tbody 
 						block  
@@ -167,7 +185,8 @@ mixin table2(options)
 			thead
 				tr 
 					each head in options.headers 
-						td= head 
+						td
+							strong= head 
 			if block
 				tbody 
 					block 
@@ -203,4 +222,9 @@ mixin table(options)
 				tbody 
 					block 	
 
+
+mixin X(dismiss)
+	button(type="button", data-dismiss=dismiss).close
+		span(aria-hidden="true") &times;
+		span.sr-only 关闭
 

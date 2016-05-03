@@ -4,6 +4,7 @@ block title
 	title 第七章 网格系统
 
 block content
+	include bootstrap-engin
 	style.
 		.row.this-page *[class*=col-]{
 			background-color: #eee;
@@ -57,7 +58,8 @@ block content
 		li 个列通过padding来创建之间的间隔，
 			|最前和最后一列通过-margin来抵消padding
 	p 下面根据原理图简单解释：
-	img(src="images/colomun.jpg", alt="").img-responsive
+	+imageModal("images/colomun.jpg")
+	//- img(src="images/colomun.jpg", alt="").img-responsive
 	ol
 		li 最外边框，带有一大片白色区域，相当于浏览器的可视区域。
 			|bootstrap网格系统带有响应式效果，针对4类浏览器（超小屏，小屏，中屏和大屏）。
