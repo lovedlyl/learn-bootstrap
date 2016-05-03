@@ -1,0 +1,76 @@
+extends layout
+
+block title
+	title 第十六章 下拉菜单（JS篇）
+
+block content
+	h2.text-primary 第十六章 下拉菜单（JS篇）
+
+	mixin items()
+		li.dropdown
+			a(data-toggle="dropdown", href="#").dropdown-toggle 教程
+				span.caret
+			ul.dropdown-menu
+				each i in ["css", "html", "javascript"]
+					li 
+						a(href="#") #{i}
+		li.active 
+			a(href="#") 前端论坛
+		li 
+			a(href="#") 关于我们
+	
+	//- 
+	h3.text-primary 16.1 属性声明方式
+	p 如
+		a(href="ch6.html", target="_blank") 第十六章
+		|可以在导航条和胶囊式导航中使用属性声明的方法达到下拉菜单。
+		br 
+		|其基本结构为：
+		kbd li.dropdown > (a(data-toggle=dropdown, href=#).dropdown-toggle > span.caret) + ul.dropdown-menu
+		|如下：
+	.navbar.navbar-default
+		.navbar-header
+			.navbar-brand W3cplus
+		ul.nav.navbar-nav
+			+items
+	.nav.nav-pills
+		+items
+	p 
+		strong 实现原理：
+		|依赖于a或button元素添加自定义属性data-toggle="dropdown"。当dropdown.js插件载入时
+		br
+		|，就为data-toggle="dropdown"的元素绑定了事件。当此元素被点击时，其父元素li.dropdown添加类
+		code .open
+		|显示，再次点击时移除类
+		code .open
+		|隐藏。
+	p.text-warning 如果是a元素，为了避免点击连接跳转到页面顶部，可以用data-target="#"代替href="#"属性。
+
+
+	//- 
+	h3.text-primary 16.2 使用JS激活
+	p 使用JS激活时：
+	pre $("#theButton").dropdown()
+	p.text-warning 同样需要属性data-toggle=dropdown（这样做好像是不是就完全没必要使用js激活?）
+	p 调用元素的dropdown方法其就实现了对下拉菜单的控制，原理同属性实现相同：
+	script.
+		$(function(){
+				$("#tutorial").dropdown()
+			})
+	.navbar.navbar-default
+		.navbar-header
+			.navbar-brand W3cplus
+		ul.nav.navbar-nav
+			li.dropdown
+				a(href="#", data-toggle="dropdown")#tutorial 教程
+					span.caret
+				ul.dropdown-menu
+					each i in ["css", "html", "javascript"]
+						li 
+							a(href="#") #{i}
+			li.active 
+				a(href="#") 前端论坛
+			li 
+				a(href="#") 关于我们					 
+
+

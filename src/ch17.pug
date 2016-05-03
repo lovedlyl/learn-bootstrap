@@ -1,0 +1,95 @@
+extends layout
+
+block title
+	title 第十七章 滚动监听
+
+block content 
+	include bootstrap-engin
+
+	h2.text-primary 第十七章 滚动监听
+
+	p.lead 根据滚动条所处位置，自动更新导航项样式，对其高亮，下拉菜单也会高亮。
+		br
+		a(href="scrollsply.html", target="_blank").text-info  演示页面
+
+	//- 
+	h3.text-primary 17.1 ID一致
+	p 导航中链接的地址，需要对应被导航内容中的ID属性，比如
+	pre 
+		|&lt;a href="#home"&gt;主页	&lt;/a&gt;	
+		|&lt;div id="home"&gt;...&lt;/div&gt;	
+
+	p.text-warning 不可见元素（jQuery中的not:visible）不会被监听，并且相对应的导航项目也不会高亮。
+
+	//- 
+	h3.text-primary 17.2 相对定位
+	p 被监听的对象必须相对定位，并且设置高度，overflow设置为scroll：
+	pre 
+		|#scrollSpied{
+		|	position: relative;
+		|	height: ...;
+		|	overflow: scroll
+		|}
+
+	//- 
+	h3.text-primary 17.3 data-属性调用
+	p 为被调用元素设置
+		span.text-warning data-spy=scroll
+		|属性，并且设置其
+		span.text-warning data-target
+		|属性为对应导航
+		code .nav
+		|父元素的ID或class。
+
+	pre 
+		|&lt;div id="navbar-example" class="navbar navbar-default"&gt;
+		|	&lt;div class="nav navbar-nav"&gt;
+		|		........
+		|	&lt;/div&gt;
+		|&lt;/div&gt;
+		|&lt;div data-scroll="spy," data-target="#navbar-example"&gt;
+		|	......
+		|&lt;/div&gt;	
+	p 还可设置
+		span.text-warning data-offset
+		|属性，指定距离被监听元素顶部多大距离时处于监听状态。比如data-offset="100"，
+		|表示距离被距被监听元素顶部100px时，对应的导航项目高亮。
+
+
+	//- 
+	h3.text-primary 17.4 通过JS调用
+	p 可以不设置被监听对象的上述所有data-属性，而是调用其方法scollspy：
+	pre $("#scrollSpied").scrollsply({target: "#navbar-example"})
+
+	p 
+		strong 刷新：
+		|当DOM中有元素添加或删除后，需要用下面方法刷新监听：
+		pre 
+			|$("[data-spy='scroll']").each(function(){
+			|	var $spy = $(this);
+			|	$spy.scrollsply("refresh");
+			|	})
+
+	p 
+		strong 	参数：
+	+table2({headers: ["名称","类型","默认值","描述"]}).table-bordered
+		tr 
+			td offset 
+			td number
+			td 10
+			td 相当于属性调用中的data-offset
+
+	p 
+		strong 事件：
+	+table2({headers: ["事件类型", "描述", "注意"]}).table-bordered
+		tr 
+			td activate.bs-scrollspy
+			td 	$(".nav元素的父元素")，当被监听的各个项目被激活时执行
+			td.text-warning 下拉菜单中的项目被激活时不执行
+	pre  $("#navbar-example").on("activate.bs.scrollpy", function(){......})
+	p.text-info 在
+		strong
+			a(href="scrollsply.html", target="_blank") 演示页面
+		|打开控制台观察变化。
+
+

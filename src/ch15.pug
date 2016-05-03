@@ -4,7 +4,6 @@ block title
 	title 第十五章 模态弹出框
 
 block content 
-
 	include bootstrap-engin
 
 	mixin showModal(src)
@@ -378,6 +377,7 @@ block content
 			td URL
 			td 空值
 			td 相当于a链接中的href属性。
+			td
 
 	//- 
 	h3.text-primary 15.10 JS触发时其它参数设置
@@ -426,27 +426,27 @@ block content
 	script.
 		$(function(){
 			$("#click2").click(function(){
-				$("#modal-fade").modal({backdrop: false})
+				$("#modal-fade4").modal({backdrop: false})
 				})
-			$("#modal-fade").on("show.bs.modal", function(e){
+			$("#modal-fade4").on("show.bs.modal", function(e){
 				//console.log(this.relatedTarget)
 				alert("before show")
 				})
-			$("#modal-fade").on("shown.bs.modal", function(){
+			$("#modal-fade4").on("shown.bs.modal", function(){
 				alert("after show")
 				})
 
-			$("#modal-fade").on("hide.bs.modal", function(){
+			$("#modal-fade4").on("hide.bs.modal", function(){
 				alert("before hide")
 				})
 
-			$("#modal-fade").on("hidden.bs.modal", function(){
+			$("#modal-fade4").on("hidden.bs.modal", function(){
 				alert("after hide")
 				})
 
 
 			$("#shit").click(function(){
-				$("#modal-fade").modal("toggle")
+				$("#modal-fade4").modal("toggle")
 				})
 			})
 	//- -------------------------------------------------------------------------------------
