@@ -54,6 +54,6 @@ gulp.task("default", function() {
         // server: "dist"
     });
     gulp.watch("src/*.pug", ["convertPug"]);
-    gulp.watch("dist/*.html").on("change", reload);
+    gulp.watch("dist/*.html").on("change", browserSync.reload);
 
 });
