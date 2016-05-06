@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="images/me.jpg"><title>第十九章 工具提示和弹出框</title><link rel="stylesheet" href="styles/bootstrap.css"><style>body{margin: 20px 0}</style><script src="scripts/bootstrap.js"></script></head><body class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1"><div class="page-header"><h1 class="text-primary">Bootstrap 学习笔记</h1></div><div class="navbar navbar-inverse"><div class="navbar-header"><button class="btn btn-default navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse navbar-responsive-collapse"><ul class="nav navbar-nav nav-pills"><li> <a href="index.html">首页</a></li><li> <a href="ch2.html">第二章</a></li><li> <a href="ch3.html">第三章</a></li><li> <a href="ch4.html">第四章</a></li><li> <a href="ch5.html">第五章</a></li><li> <a href="ch6.html">第六章</a></li><li> <a href="ch7.html">第七章</a></li><li> <a href="ch8.html">第八章</a></li><li> <a href="ch9.html">第九章</a></li><li> <a href="ch10.html">第十章</a></li><li> <a href="ch11.html">第十一章</a></li><li> <a href="ch12.html">第十二章</a></li><li> <a href="ch13.html">第十三章</a></li><li> <a href="ch14.html">第十四章</a></li><li> <a href="ch15.html">第十五章</a></li><li> <a href="ch16.html">第十六章</a></li><li> <a href="ch17.html">第十七章</a></li><li> <a href="ch18.html">第十八章</a></li><li> <a href="ch19.html">第十九章</a></li><li> <a href="ch20.html">第二十章</a></li></ul></div></div><h2 class="text-primary">第十九章 工具提示和弹出框</h2><p> <strong>效果：</strong></p><script>$(function(){
+	$("[data-toggle='tooltip']").tooltip()
+	})</script><div id="btns"><button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="top" data-original-title="提示在top" style="margin-right: 20px">提示工具在top</button><button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" data-original-title="提示在right" style="margin-right: 20px">提示工具在right</button><button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="bottom" data-original-title="提示在bottom" style="margin-right: 20px">提示工具在bottom</button><button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="left" data-original-title="提示在left" style="margin-right: 20px">提示工具在left</button></div><h3 class="text-primary">19.1 实现步骤</h3><ol> <li>使用&lt;a&gt;或&lt;button&gt;标签</li><li>为元素添加<span class="text-warning">title</span>属性，用来作为提示信息内容。（也可以使用<span class="text-warning">data-original-title</span>属性，其优先级高于<span class="text-warning">title</span>属性）。</li><li>添加<span class="text-warning">data-placement</span>属性，用来指定提示内容出现的位置。可选top, right, bottom, left4个值。</li><li>还有一个必不可少的参数就是<span class="text-warning">data-toggle="tooltip"</span></li></ol><p> <strong>出于性能考虑，不可通过data-属性设置直接激活提示工具，只能通过js激活：</strong></p><pre>$("[data-toggle='tooltip']").tooltip()</pre><h3 class="text-primary">19.2 JS触发</h3><p>直接使用JS触发，不需设置data-属性，比如：<button class="btn btn-block btn-primary" type="button" id="btn1">纯JS，没有设置任何data-属性</button></p><pre> &lt;button class="btn btn-block btn-default" type="button" id="btn1"&gt;纯JS，没有设置任何data-属性&lt;/button&gt;
+&lt;script&gt;
+$(function() {
+   $("#btn1").tooltip({
+       title: "我只使用了JS，没有设置任何data-属性",
+       placement: "bottom"
+   })
+})</pre><script>$(function(){
+		$("#btn1").tooltip({
+			title: "我只使用了JS，没有设置任何data-属性",
+			placement: "bottom"
+
+			})
+	})</script><p> <strong>参数配置：</strong></p><p class="text-muted">这些参数都可以作为属性在元素上设置，只需加上"data-"即可，比如animation -> data-animation="false"</p><table class="table table-bordered"><thead><tr> <td><strong>名称</strong></td><td><strong>类型</strong></td><td><strong>默认值</strong></td><td><strong>描述</strong></td><td><strong>演示</strong></td></tr></thead><tbody> <tr> <td>animation </td><td>布尔值</td><td>true</td><td>提示框出现时，是否有动画效果</td><td> <button class="btn btn-default" type="button" id="btn2">没有动画</button><script>$("#btn2").tooltip({
+	title: "没有动画",
+	animation: false
+	})</script></td></tr><tr> <td>delay</td><td>number | object</td><td>0</td><td>延迟多久才出现/关闭提示框，不适用于manual触发器（？）<br>如果是数字，则出现和关闭都延迟同样事件，<br>如果是对象，格式为delay:{show:200, hide:100}</td><td> <button class="btn btn-default" type="button" id="btn3">都延迟500ms</button><script>$("#btn3").tooltip({
+	title: "延迟500ms",
+	delay: {show: 500, hide: 1000}
+	})</script></td></tr><tr> <td>container</td><td>string|false</td><td>false </td><td>将提示框附着在该容器上，比如container:body</td><td> <button class="btn btn-default" type="button" id="btn4">我的提示框在body元素上（没效果，没理解！）</button><script>$("#btn4").tooltip({
+	title: "我的提示框在body元素上",
+	container: "body",
+	})</script></td></tr><tr> <td>html </td><td>布尔值</td><td>false</td><td>是否将title字符串解析为html，如果需要防止XSS攻击，最好还是使用text形式，即默认值得。</td><td> <button class="btn btn-default" type="button" id="btn5">我的文本有加粗</button><script>$("#btn5").tooltip({
+	title: "我很<strong>strong</strong>, 我不strong",
+	html: true
+	})</script></td></tr><tr> <td>placement</td><td>string|function</td><td>"top"</td><td>可选top|right|bottom|left|auto。<br>如果是“auto”将动态定位提示。<br>如果是“auto left”，提示将尽量放置在左边，实在不行（？）时才放置在右边。<br>如果是函数，默认提示DOM为第一个参数，激活按钮（btn）为第二个参数。<br>返回值应为left|right等表示位置的字符串。</td><td> <button class="btn btn-default" type="button" id="btn6">我有提示</button><script>$("#btn6").tooltip({
+	title: "我是提示，点我改变样式",
+	//- selector: ".table-bordered",
+	//- trigger: "click",
+	placement: function(tooltip, btn){
+		$(btn).removeClass("btn-default").addClass("btn-primary").html("我变绿了！");
+		$(tooltip).text("这是提示喔");
+		console.log(this);
+		return "left"
+	}
+	})</script></td><tr> <td>trigger</td><td>string</td><td>hover|focus</td><td>激活提示的事件，click|hover|focus|manual。manual不能和其它形式同时使用</td><td> <button class="btn btn-default" type="button" id="btn7">click激活</button><script>$("#btn7").tooltip({
+	trigger: "click",
+	title: "click激活"
+	})</script></td></tr><tr> <td>viewport</td><td>string|object</td><td> </td><td>确保提示框在元素边缘内，如viewport:"#viewport"或{selector: "#viewport", padding: 0}</td><td> </td></tr><tr> <td>template</td><td>string </td><td> <pre> &lt;div class="tooltip" role="tooltip"&gt;
+	&lt;div class="tooltip-arrow"&gt;&lt;/div&gt;
+	&lt;div class="tooltip-inner"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre></td><td>提示工具默认的html模板</td><td></td></tr><tr> <td>selector</td><td>字符串</td><td>false(是字符串，又false， 难道是"false"？)</td><td>如果有声明，触发该selector时才显示</td><td> <button class="btn btn-default" type="button" id="btn8">不在这里显示</button><p>没效果？？</p><script>$("#btn8").tooltip({
+	selector: "h3",
+	title: "这里是3级标题"
+	})</script></td></tr></tr></tbody></table><p> <strong>事件：</strong></p><table class="table table-bordered"><thead><tr> <td><strong>类型</strong></td><td><strong>描述</strong></td></tr></thead><tbody> <tr> <td>show.bs.tooltip</td><td>提示显示前执行</td></tr><tr> <td>shown.bs.tooltip</td><td>提示显示后执行</td></tr><tr> <td>hide.bs.tooltip</td><td>提示隐藏前执行</td></tr><tr> <td>hidden.bs.tooltip</td><td>提示隐藏后执行</td></tr></tbody></table><p> <strong>例：</strong></p><pre>$("#theTooltipTriggerButton").on("show.bs.tooltip", function(){ ... })</pre><button class="btn btn-primary" type="button" id="btn9">点击演示</button><script>$("#btn9")
+.tooltip({
+	title: "事件演示",
+	trigger: "click"
+	})
+.on("show.bs.tooltip", function(){
+		alert("before show")
+	})
+.on("shown.bs.tooltip", function(){
+		alert("after show")
+	})
+.on("hide.bs.tooltip", function(){
+		alert("before hide")
+	})
+.on("hidden.bs.tooltip", function(){
+		alert("after hidden")
+	})			
+</script><h3 class="text-primary">19.3 弹出框 </h3><style>#btn10, #btn20, #btn30, #btn40{
+	margin-right: 10px;
+}</style><p>实例：</p><div class="btn-group"><a class="btn btn-danger" rol="button" tabindex="0" data-toggle="popover" data-trigger="hover|focus" title="弹出框标题" data-content="弹出框内容" id="btn10">可消失的弹出框</a><script>$("#btn10").popover({placement: "top", trigger: "hover"})</script><a class="btn btn-danger" rol="button" tabindex="0" data-toggle="popover" data-trigger="hover|focus" title="弹出框标题" data-content="弹出框内容" id="btn20">可消失的弹出框</a><script>$("#btn20").popover({placement: "right"})</script><a class="btn btn-danger" rol="button" tabindex="0" data-toggle="popover" data-trigger="hover|focus" title="弹出框标题" data-content="弹出框内容" id="btn30">可消失的弹出框</a><script>$("#btn30").popover({placement: "bottom"})</script><a class="btn btn-danger" rol="button" tabindex="0" data-toggle="popover" data-trigger="hover|focus" title="弹出框标题" data-content="弹出框内容" id="btn40">可消失的弹出框</a><script>$("#btn40").popover({placement: "left"})						</script></div><p>弹出框和提示工具相比，无论是属性设置，调用方式，还是事件类型都一样。不过，还是需要注意以下几点：</p><ol> <li>为了跨平台和跨浏览器效果，使用&lt;a&gt;标签，<span class="text-warning">不能用&lt;button&gt;标签。</span><br>data-toggle属性设置为popover。<span class="text-warning">还必须添加role="button"和tabindex="0"两个属性。</span><pre>&lt;a role="button," tabindex="0," data-toggle="popover"&gt;可消失的弹出框&lt;/a&gt;</pre></li><li>除了可以设置title属性外，还可以设置data-content属性（JS调用时为content属性），表示弹出框主体文本。</li><li>tooltip默认的触发事件为hover和focus，而弹出框默认的触发事件是click。（可以通过tigger属性更改）</li></ol><hr></body></html>

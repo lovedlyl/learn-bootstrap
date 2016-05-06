@@ -1,0 +1,122 @@
+extends layout 
+
+block title
+	title 第二十章 警告框（JS）
+
+block content
+	include bootstrap-engin
+
+	h2.text-primary 第二十章 警告框（JS）
+	p.lead 为警告框添加点击并消失的功能。
+
+	ul
+		li 
+			strong 没有关闭功能的警告框：
+		.alert.alert-danger(role="alert")
+			//- button.close(type="button", data-dismiss="alert")
+			//- 	span(aria-hidden="true") &times;
+			//- 	span.sr-only Close
+			h4 谨防被骗
+			p 请确认转账信息，不要轻易相信陌生人...
+		li 
+			strong 有关闭功能的警告框：
+		.alert.alert-danger.alert-dismissable.fade.in(role="alert")
+			button.close(type="button", data-dismiss="alert")
+				span(aria-hidden="true") &times;
+				span.sr-only Close
+			h4 谨防被骗
+			p 请确认转账信息，不要轻易相信陌生人...
+
+	//- 
+	h3.text-primary 20.1 属性实现
+	p 使用属性实现主要有以下几个步骤：
+	ol 
+		li 在警告框
+			code .alert.alert-?
+			|的基础上添加类
+			code .alert-dismissable
+		li 使用button标签制作关闭功能，为按钮添加
+			code .close
+			|，作为
+			code .alert-dismissable
+			|标签的第一个子元素，并且之前不能有任何文本。
+		li 为
+			code .close
+			|标签添加data-dissmiss="alert"属性，实现点击关闭警告框功能。
+		li 如果需要警告框关闭时有淡出效果，还需为
+			code .alert-dismissable
+			|添加类
+			code .fade
+			|和
+			code .in
+	p 
+		strong 以上是基本用法，其它用法如下：
+	ol 
+		li 关闭按钮不一定使用带类
+			code .close
+			|的X号，也可以使用普通按钮元素和标签元素。只要保证有data-dismiss="alert"属性即可。
+			br 
+			span.text-warning 实际上，当点击关闭时，首先查找data-target属性，再查找href属性，如果两者都无，直接关闭父元素。
+			.alert.alert-danger.alert-dismissable
+				h4 谨防被骗
+				p 请确认转账信息，不要轻易相信陌生人...
+				a(href="#", data-dismiss="alert").btn.btn-danger 关闭
+		li 从上面一点可以看出，如果设置相应的data-target（a元素可以是href）属性，即使关闭标签不在
+			code .alert
+			|标签内，也可以实现关闭。即data-target（或href）属性作为选择器正确选择到对应的
+			code .alert
+			|警告框。
+			#alert1.alert.alert-danger.alert-dismissable
+				h4 谨防被骗
+				p 请确认转账信息，不要轻易相信陌生人...	
+			p 
+				a(data-target="#alert1", data-dismiss="alert").btn.btn-danger 关闭	
+
+
+	//-
+	h3.text-primary 20.2 JS实现
+	p 使用JS实现时，不需要为关闭按钮添加data-dismiss="alert"和data-target属性，调用close()方法即可：
+	pre 
+		|$("#close2").click(function(){
+		|	$(this).alert("close");
+		|})
+	#alert2.alert.alert-danger.alert-dismissable.fade.in
+		h4 谨防被骗
+		p 请确认转账信息，不要轻易相信陌生人...	
+		a(role="button")#close2.btn.btn-danger 关闭	
+	script.
+		$("#close2").click(function(){
+			$(this).alert("close")
+			})	
+
+	p 
+		strong 事件：
+		+table2({headers:["事件类型", "描述"]}).table-bordered.table-condensed
+			tr 
+				td close.bs.alert 
+				td 警告框消失前执行
+			tr 
+				td closed.bs.alert 
+				td 警告框消失后执行
+
+	#alert3.alert.alert-danger.alert-dismissable.fade.in
+		h4 谨防被骗
+		p 请确认转账信息，不要轻易相信陌生人...	
+		a(role="button")#close3.btn.btn-danger 关闭	
+	script.
+		$("#close3").click(function(){
+			$(this).alert("close")
+			})
+		$("#alert3")
+			.on("close.bs.alert", function(){
+				alert("before close")
+			})	
+			.on("closed.bs.alert", function(){
+				alert("after closed")
+				})
+	p 
+		strong 用法：
+	pre 
+		|$("#alert3").on("close.bs.alert", function(){
+		|		alert("before close")
+		|})

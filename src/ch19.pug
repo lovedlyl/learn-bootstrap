@@ -1,0 +1,257 @@
+extends layout
+
+block title 
+	title 第十九章 工具提示和弹出框
+
+block content 
+	include bootstrap-engin
+	h2.text-primary 第十九章 工具提示和弹出框
+
+	p 
+		strong 效果：
+	script.
+		$(function(){
+			$("[data-toggle='tooltip']").tooltip()
+			})
+	#btns
+		each position in ["top", "right", "bottom", "left"]
+			button(type="button", data-toggle="tooltip", data-placement=position, data-original-title="提示在" + position, style="margin-right: 20px").btn.btn-default 提示工具在#{position}
+
+	h3.text-primary 19.1 实现步骤
+	ol 
+		li 使用&lt;a&gt;或&lt;button&gt;标签
+		li 为元素添加
+			span.text-warning title
+			|属性，用来作为提示信息内容。（也可以使用
+			span.text-warning data-original-title
+			|属性，其优先级高于
+			span.text-warning title
+			|属性）。
+		li 添加
+			span.text-warning data-placement
+			|属性，用来指定提示内容出现的位置。可选top, right, bottom, left4个值。
+		li 还有一个必不可少的参数就是
+			span.text-warning data-toggle="tooltip"
+	p 
+		strong 出于性能考虑，不可通过data-属性设置直接激活提示工具，只能通过js激活：
+	pre $("[data-toggle='tooltip']").tooltip()
+
+	//- 
+	h3.text-primary 19.2 JS触发
+	p 直接使用JS触发，不需设置data-属性，比如：
+		button(type="button")#btn1.btn.btn-block.btn-primary 纯JS，没有设置任何data-属性
+	pre 
+		|&lt;button class="btn btn-block btn-default" type="button" id="btn1"&gt;纯JS，没有设置任何data-属性&lt;/button&gt;
+		|&lt;script&gt;
+		|$(function() {
+		|    $("#btn1").tooltip({
+		|        title: "我只使用了JS，没有设置任何data-属性",
+		|        placement: "bottom"
+		|    })
+		|})
+
+	script.
+		$(function(){
+				$("#btn1").tooltip({
+					title: "我只使用了JS，没有设置任何data-属性",
+					placement: "bottom"
+
+					})
+			})
+	p 
+		strong 参数配置：
+	p.text-muted 这些参数都可以作为属性在元素上设置，只需加上"data-"即可，比如animation -> data-animation="false"
+	+table2({headers: ["名称", "类型", "默认值", "描述", "演示"]}).table-bordered
+		tr 
+			td animation 
+			td 布尔值
+			td true
+			td 提示框出现时，是否有动画效果
+			td 
+				button(type="button")#btn2.btn.btn-default 没有动画
+				script.
+					$("#btn2").tooltip({
+						title: "没有动画",
+						animation: false
+						})
+		tr 
+			td delay
+			td number | object
+			td 0
+			td 延迟多久才出现/关闭提示框，不适用于manual触发器（？）
+				br 
+				|如果是数字，则出现和关闭都延迟同样事件，
+				br 
+				|如果是对象，格式为delay:{show:200, hide:100}
+			td 
+				button(type="button")#btn3.btn.btn-default 都延迟500ms
+				script.
+					$("#btn3").tooltip({
+						title: "延迟500ms",
+						delay: {show: 500, hide: 1000}
+						})
+		tr 
+			td container
+			td string|false
+			td false 
+			td 将提示框附着在该容器上，比如container:body
+			td 
+				button(type="button")#btn4.btn.btn-default 我的提示框在body元素上（没效果，没理解！）
+				script.
+					$("#btn4").tooltip({
+						title: "我的提示框在body元素上",
+						container: "body",
+						})
+		tr 
+			td html 
+			td 布尔值
+			td false
+			td 是否将title字符串解析为html，如果需要防止XSS攻击，
+				|最好还是使用text形式，即默认值得。
+			td 
+				button(type="button")#btn5.btn.btn-default 我的文本有加粗
+				script.
+					$("#btn5").tooltip({
+						title: "我很<strong>strong</strong>, 我不strong",
+						html: true
+						})
+		tr 
+			td placement
+			td string|function
+			td "top"
+			td 可选top|right|bottom|left|auto。
+				br
+				|如果是“auto”将动态定位提示。
+				br
+				|如果是“auto left”，提示将尽量放置在左边，实在不行（？）时才放置在右边。
+				br 
+				|如果是函数，默认提示DOM为第一个参数，激活按钮（btn）为第二个参数。
+				br 
+				|返回值应为left|right等表示位置的字符串。
+			td 
+				button(type="button")#btn6.btn.btn-default 我有提示
+				script.
+					$("#btn6").tooltip({
+						title: "我是提示，点我改变样式",
+						//- selector: ".table-bordered",
+						//- trigger: "click",
+						placement: function(tooltip, btn){
+							$(btn).removeClass("btn-default").addClass("btn-primary").html("我变绿了！");
+							$(tooltip).text("这是提示喔");
+							console.log(this);
+							return "left"
+						}
+						})
+			tr 
+				td trigger
+				td string
+				td hover|focus
+				td 激活提示的事件，click|hover|focus|manual。manual不能和其它形式同时使用
+				td 
+					button(type="button")#btn7.btn.btn-default click激活
+					script.
+						$("#btn7").tooltip({
+							trigger: "click",
+							title: "click激活"
+							})
+			tr 
+				td viewport
+				td string|object
+				td 
+				td 确保提示框在元素边缘内，如viewport:"#viewport"或{selector: "#viewport", padding: 0}
+				td 
+			tr 
+				td template
+				td string 
+				td 
+					pre 
+						|&lt;div class="tooltip" role="tooltip"&gt;
+						|	&lt;div class="tooltip-arrow"&gt;&lt;/div&gt;
+						|	&lt;div class="tooltip-inner"&gt;&lt;/div&gt;
+						|&lt;/div&gt;
+				td 提示工具默认的html模板
+				td
+			tr 
+				td selector
+				td 字符串
+				td false(是字符串，又false， 难道是"false"？)
+				td 如果有声明，触发该selector时才显示
+				td 
+					button(type="button")#btn8.btn.btn-default 不在这里显示
+					p 没效果？？
+					script.
+						$("#btn8").tooltip({
+							selector: "h3",
+							title: "这里是3级标题"
+							})
+	p 
+		strong 事件：
+	+table2({headers: ["类型","描述"]}).table-bordered
+		tr 
+			td show.bs.tooltip
+			td 提示显示前执行
+		tr 
+			td shown.bs.tooltip
+			td 提示显示后执行
+		tr 
+			td hide.bs.tooltip
+			td 提示隐藏前执行
+		tr 
+			td hidden.bs.tooltip
+			td 提示隐藏后执行
+
+	p 
+		strong 例：
+	pre $("#theTooltipTriggerButton").on("show.bs.tooltip", function(){ ... })
+
+	button(type="button")#btn9.btn.btn-primary 点击演示
+	script.
+		$("#btn9")
+		.tooltip({
+			title: "事件演示",
+			trigger: "click"
+			})
+		.on("show.bs.tooltip", function(){
+				alert("before show")
+			})
+		.on("shown.bs.tooltip", function(){
+				alert("after show")
+			})
+		.on("hide.bs.tooltip", function(){
+				alert("before hide")
+			})
+		.on("hidden.bs.tooltip", function(){
+				alert("after hidden")
+			})			
+
+	//-
+	h3.text-primary 19.3 弹出框 
+
+	style.
+		#btn10, #btn20, #btn30, #btn40{
+			margin-right: 10px;
+		}
+	p 实例：
+	.btn-group
+		a(rol="button", tabindex=0, data-toggle="popover", data-trigger="hover|focus", title="弹出框标题", data-content="弹出框内容")#btn10.btn.btn-danger 可消失的弹出框
+		script.
+			$("#btn10").popover({placement: "top", trigger: "hover"})
+		a(rol="button", tabindex=0, data-toggle="popover", data-trigger="hover|focus", title="弹出框标题", data-content="弹出框内容")#btn20.btn.btn-danger 可消失的弹出框
+		script.
+			$("#btn20").popover({placement: "right"})
+		a(rol="button", tabindex=0, data-toggle="popover", data-trigger="hover|focus", title="弹出框标题", data-content="弹出框内容")#btn30.btn.btn-danger 可消失的弹出框
+		script.
+			$("#btn30").popover({placement: "bottom"})
+		a(rol="button", tabindex=0, data-toggle="popover", data-trigger="hover|focus", title="弹出框标题", data-content="弹出框内容")#btn40.btn.btn-danger 可消失的弹出框
+		script.
+			$("#btn40").popover({placement: "left"})						
+	p 弹出框和提示工具相比，无论是属性设置，调用方式，还是事件类型都一样。不过，还是需要注意以下几点：
+	ol 
+		li 为了跨平台和跨浏览器效果，使用&lt;a&gt;标签，
+			span.text-warning 不能用&lt;button&gt;标签。
+			br
+			|data-toggle属性设置为popover。
+			span.text-warning 还必须添加role="button"和tabindex="0"两个属性。
+			pre &lt;a role="button," tabindex="0," data-toggle="popover"&gt;可消失的弹出框&lt;/a&gt;
+		li 除了可以设置title属性外，还可以设置data-content属性（JS调用时为content属性），表示弹出框主体文本。
+		li tooltip默认的触发事件为hover和focus，而弹出框默认的触发事件是click。（可以通过tigger属性更改）
