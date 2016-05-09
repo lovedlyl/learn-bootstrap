@@ -1,0 +1,159 @@
+extends layout
+
+block title 
+	title 第二十二章 手风琴效果
+
+block content 
+	include bootstrap-engin
+
+	h2.text-primary 第二十二章 手风琴效果
+	-var items = [{title: "标题一", content: "标题一对应的内容"},{title: "标题二", content: "标题二对应的内容"},{title: "标题三", content: "标题三对应的内容"}]
+	
+	//- 
+	h3.text-primary 22.1 基本结构
+	p 最简单的结构就是一个触发器和一个折叠区：
+	div
+		button(type="button", data-toggle="collapse", data-target="#demo1").btn.btn-primary 触发器
+		#demo1.collapse.in 折叠区
+	pre 
+		|&lt;button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器&lt;/button&gt;
+		|&lt;div class="collapse in" id="demo1"&gt;折叠区&lt;/div&gt;	
+	p 制作触发器时可以用a元素，也可以用button元素，关键是要为其声明属性data-toggle="collapse"和data-target="*"（对应折叠区的选择器）	
+		br 
+		|折叠区需要添加类
+		code .collapse
+		|如果需要默认为显示状态，还要追加类
+		code .in
+	div
+		a(href="#collapse10", role="button", data-toggle="collapse").btn.btn-primary 链接
+		button(type="button", data-target="#collapse20", data-toggle="collapse").btn.btn-primary  按钮
+		#collapse10.collapse.in.well 链接对应的折叠区
+		#collapse20.collapse.well 按钮对应的折叠区 
+	pre
+		|&lt;a class="btn btn-primary" href="#collapse10" role="button" data-toggle="collapse"&gt;链接&lt;/a&gt;
+		|&lt;button class="btn btn-primary" type="button" data-target="#collapse20" data-toggle="collapse"&gt; 按钮&lt;/button&gt;
+		|&lt;div class="collapse in well" id="collapse10"&gt;链接对应的折叠区&lt;/div&gt;
+		|&lt;div class="collapse well" id="collapse20"&gt;按钮对应的折叠区 &lt;/div&gt;
+
+	//- 
+	h3.text-primary 22.2 通用结构
+	p 不过，一般情况下，结合面板
+		code .panel
+		|实现： 
+	
+	#accordion.panel-group
+		each item, i in items
+			-var show =""
+			if (i == 0)
+				-show = "in"
+			.panel.panel-default
+				.panel-heading
+					h4.panel-title
+						a(href="#collapse" + i, data-toggle="collapse", data-parent="#accordion").collapsed
+							| #{item.title}
+				.panel-collapse.collapse(id="collapse" + i, class=show)
+					.panel-body
+						| #{item.content}
+	p 
+		strong 实现过程：
+	ol 
+		li 使用
+			code .panel-group
+			|将多个
+			code .panel
+			|包裹起来：
+			kbd .panel-group > .panel.panel-default * ?
+		li 
+			code .panel-group 
+			|要有唯一标识符，以便触发器设置data-parent属性：
+			kbd #最外层标识符.panel-group
+		li 触发器放置在
+			code .panel-heading 
+			|内，设置属性data-toggle="collapse", data-parent="#最外层标识符", data-target="#折叠区标识符"
+			br 
+			|，如果触发器使用连接，可以用href属性代替data-target属性:
+			br 
+			kbd #最外层标识符.panel-group > (.panel.panel-default > 
+				br
+				|(.panel-heading > a(href="#折叠区标识符", data-toggle="collapse", data-parent="#最外层标识符")
+		li 
+			code .panel-body
+			|放置在
+			code .collapse.panel-collapse
+			|内，如果需要折叠区默认显示，还需要添加类
+			code .in：
+			kbd #最外层标识符.panel-group > (.panel.panel-default > 
+				br
+				|(.panel-heading > a(href="#折叠区标识符", data-toggle="collapse", data-parent="#最外层标识符") 
+				br 
+				| + (.panel-collapse.collapse.in > .panel-body)			  
+
+	//- 
+	h3.text-primary 22.3 JS调用
+	p.text-warning JS调用时，针对的对象时折叠区
+		code .collapse
+		|而不是data-parent属性指向的最外层包裹元素。
+	pre $("折叠区标识符").collapse()
+	p 
+		strong 属性：
+	+table2({headers: ["名称","类型","默认值", "描述"]}).table-bordered
+		tr 
+			td parent 
+			td CSS选择器
+			td false 
+			td 如果指定parent属性，当此折叠区显式时，处于parent所指元素内的所有折叠区关闭。
+		tr 
+			td toggle 
+			td 布尔值
+			td true
+			td 折叠区是否采用toggle方式显示。（隐藏时显示，显示时隐藏）
+	
+
+	p 
+		strong 事件：
+	+table2({headers: ["事件类型","描述"]}).table-bordered
+		tr 
+			td show.bs.collapse
+			td 折叠区显示前调用
+		tr 
+			td shown.bs.collapse
+			td 折叠区显示后调用
+		tr 
+			td hide.bs.collapse
+			td 折叠区隐藏前调用	
+		tr 
+			td hidden.bs.collapse
+			td 折叠区隐藏后调用
+	pre $("折叠区标识符").on("show.bs.collapse", function(){ ... })
+
+	p 点击
+		strong “标题一”
+		|查看结果：
+	#accordion10.panel-group
+		each item, i in items
+			-var show =""
+			if (i == 0)
+				-show = "in"
+			.panel.panel-default
+				.panel-heading
+					h4.panel-title
+						a(href="#collapse" + (i + 100), data-toggle="collapse", data-parent="#accordion10")
+							| #{item.title}
+				.panel-collapse.collapse(id="collapse" + (i + 100), class=show)
+					.panel-body
+						| #{item.content}
+
+	script.
+		$("#collapse100")
+		.on("show.bs.collapse", function(){
+			alert("before show")
+			})
+		.on("shown.bs.collapse", function(){
+			alert("after show")
+			})
+		.on("hide.bs.collapse", function(){
+			alert("before hide")
+			})
+		.on("hidden.bs.collapse", function(){
+			alert("after hide")
+			})						
