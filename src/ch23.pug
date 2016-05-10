@@ -1,0 +1,187 @@
+extends layout
+
+block title 
+	title 第二十三章 图片轮播
+
+
+block content
+	include bootstrap-engin
+	style.
+		img{
+				width: 100%;
+		}
+	h2.text-primary  第二十三章 图片轮播
+
+	p 图片轮播主要由以下3部分组成：
+	ol
+		li 轮播的图片
+		li 轮播图片计数器
+		li 轮播图片控制器
+	p 每个轮播图还可以包括标题和描述内容。
+	.container
+		.row 
+			.col-xs-5.col-sm-5.col-md-5.col-lg-5
+				#slider.carousel.slide(data-ride="carousel")
+					ol.carousel-indicators
+						li.active(data-target="#slider", data-slide-to="0")
+						li(data-target="#slider", data-slide-to="1") 
+						li(data-target="#slider", data-slide-to="2") 
+					.carousel-inner
+						.item.active 
+							img(src="images/1.jpg")
+							.carousel-caption
+								h4 标题
+								p 描述内容
+						.item
+							img(src="images/2.jpg")
+							.carousel-caption
+								h4 标题
+								p 描述内容					
+						.item
+							img(src="images/3.jpg")
+							.carousel-caption
+								h4 标题
+								p 描述内容
+					a(href="#slider", role="button", data-slide="prev").left.carousel-control
+						span.icon-prev
+					a(href="#slider", rol="button", data-slide="next").right.carousel-control
+						span.icon-next
+
+	//- 
+	h3.text-primary 23.1 实现过程
+	ol 
+		li 轮播图片采用
+			code .carousel
+			|样式，并且需要一个ID方便以后使用data属性触发。
+			pre &lt;div id="slidershow" class="carousel"&gt;&lt;/div&gt;
+		li 轮播图片计数器采用类
+			code .carousel-indicators
+			|一般为有序列表ol，有几张图片就有几个li元素，需要默认显示的图片对应的li元素需要添加类
+			code .active
+			pre 
+				|&lt;div id="slidershow" class="carousel"&gt;
+				|	&lt;ol class="carousel-indicatiors"&gt;
+				|		&lt;li class="active"&gt;&lt;/li&gt;
+				|		&lt;li&gt;&lt;/li&gt;
+				|	&lt;/ol&gt;
+				|&lt;/div&gt;		
+		li 图片区使用类
+			code .carousel-inner
+			|并且使用
+			code .item
+			|放置每个图片，如果需要默认显示，还需追加类
+			code .active	
+			pre 
+				|&lt;div id="slidershow" class="carousel"&gt;
+				|	&lt;ol class="carousel-indicatiors"&gt;
+				|		&lt;li&gt;&lt;/li&gt;
+				|		&lt;li&gt;&lt;/li&gt;
+				|	&lt;/ol&gt;
+				|	&lt;div class="carousel-inner"&gt;
+				|		&lt;div class="item active"&gt;&lt;a href="#"&gt;&lt;img src="*.jpg" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+				|		&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="*.jpg" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+				|	&lt;/div&gt;
+				|&lt;/div&gt;			
+
+		li 如果需要在图片上添加标题和描述内容，还可以在
+			code .item
+			|内添加
+			code .carousel-caption
+			pre 
+				|&lt;div class="item active"&gt;
+				|	&lt;a href="#"&gt;&lt;img src="1.jpg" alt=""&gt;&lt;/a&gt;
+				|	&lt;div class="carousel-caption"&gt;
+				|		&lt;h4&gt;标题&lt;/h4&gt;
+				|		&lt;p&gt;描述内容&lt;/p&gt;
+				|	&lt;/div&gt;
+				|&lt;/div&gt;	
+
+		li 实现控制器使用&lt;a&gt;元素，使用类
+			code .carousel-control
+			|并结合类
+			code .left 
+			|和
+			code .right
+			|。箭头图标使用
+			code .glyphicon.glyphicon-chevron-left/right
+			|或
+			code .icon-prev/nect
+			pre
+				|&lt;div id="slidershow" class="carousel"&gt;
+				|	&lt;ol class="carousel-indicatiors"&gt;
+				|		&lt;li&gt;&lt;/li&gt;
+				|		&lt;li&gt;&lt;/li&gt;
+				|	&lt;/ol&gt;
+				|	&lt;div class="carousel-inner"&gt;
+				|		&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="*.jpg" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+				|		&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="*.jpg" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+				|	&lt;/div&gt;
+				|	&lt;a href="#" class="carousel-control left"&gt;&lt;span class="icon-prev"&gt;&lt;/span&gt;&lt;/a&gt;
+				|	&lt;a href="#" class="carousel-control left"&gt;&lt;span class="icon-next"&gt;&lt;/span&gt;&lt;/a&gt;
+				|&lt;/div&gt;				
+
+	//- 
+	h3.text-primary 23.2 data-属性触发
+	p 上一节只是实现了轮播图片的基本结构，如果要通过属性触发，还要：
+	ol 
+		li 为
+			code .carousel
+			|添加属性data-ride="carousel"。如果需要图片切换更平滑，还可追加类
+			code .slide
+		li 计数控制器上的li元素添加属性data-target=".carousel的ID值"，以及data-slide-to属性，取值自身在ol的索引，基数为0。
+		li a元素控制器的href设置为".carousel的ID值"，data-slide属性设置为"next"或"prev"，分别代表向前和向后。
+	pre 
+		|&lt;div id="slidershow" class="carousel slide" data-ride="carsouel"&gt;
+		|	&lt;ol class="carousel-indicatiors"&gt;
+		|		&lt;li data-target="#slideshow" data-slide-to="0"&gt;&lt;/li&gt;
+		|		&lt;li data-target="#slideshow" data-slide-to="0"&gt;&lt;/li&gt;
+		|	&lt;/ol&gt;
+		|	&lt;div class="carousel-inner"&gt;
+		|		&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="*.jpg" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+		|		&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="*.jpg" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+		|	&lt;/div&gt;
+		|	&lt;a href="#slideshow" class="carousel-control left" data-slide="prev"&gt;&lt;span class="icon-prev"&gt;&lt;/span&gt;&lt;/a&gt;
+		|	&lt;a href="#slideshow" class="carousel-control right" data-slide="next"&gt;&lt;span class="icon-next"&gt;&lt;/span&gt;&lt;/a&gt;
+		|&lt;/div&gt;
+
+	//- 
+	h3.text-primary 23.2 JS属性触发
+	p 
+		strong 参数：
+	p 以下参数可以在
+		code .carousel
+		|上声明，效果相同，data-"参数"=？
+	+table2({headers:["名称","类型","默认值","描述"]}).table-bordered
+		tr 
+			td interval
+			td number
+			td 5000
+			td 图片切换间隔的时间，如果为false则不自动循环
+		tr 
+			td pause 
+			td string
+			td hover 
+			td 鼠标在图片上有何种事件是停止播放
+		tr 
+			td wrap
+			td 布尔值
+			td true
+			td 轮播是否保持循环，即播放一轮后是否重复
+		tr 
+			td keyboard
+			td 布尔值
+			td true
+			td 轮播是否与键盘发生交互？？
+	pre $("#slidershow").carousel({interval: 3000, wrap: false})
+
+	p 
+		strong 事件：
+	+table2({headers: ["事件类型", "描述"]}).table-bordered
+		tr 
+			td slide.bs.carousel
+			td 每张图片出现前调用
+		tr 
+			td slid.bs.carousel
+			td 每张图片出现后调用
+
+		
