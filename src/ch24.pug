@@ -1,0 +1,23 @@
+extends layout
+
+block title 
+	title 第二十四章 固定定位（Affix）
+
+block content 
+	h2.text-primary 第二十四章 固定定位（Affix）
+
+	p.lead 为元素实现固定定位
+	
+	h3.text-primary 24.1 实现过程
+	ol 
+		li 为元素设置data-spy="affix"属性，表示元素固定不变
+		li 设置data-offset属性，取值整数。如data-offset=90，表示top和bottom分别为90。也可以分别设置data-offset-top和data-offset-bottom：
+			ul 
+				li 
+					strong data-offset-top
+					|表示当页面从顶部开始滚动，滚动距离大于90px时，affix元素不再滚动，固定在页面。
+				li 
+					strong data-offset-bottom
+					|与data-offset-top相反。
+	pre &lt;ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="90" data-offset-bottom="120"&gt;&lt;/ul&gt;
+

@@ -1,4 +1,38 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="images/me.jpg"><title>第二十二章 手风琴效果</title><link rel="stylesheet" href="styles/bootstrap.css"><style>body{margin: 20px 0}</style><script src="scripts/bootstrap.js"></script></head><body class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1"><div class="page-header"><h1 class="text-primary">Bootstrap 学习笔记</h1></div><div class="navbar navbar-inverse"><div class="navbar-header"><button class="btn btn-default navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse navbar-responsive-collapse"><ul class="nav navbar-nav nav-pills"><li> <a href="index.html">首页</a></li><li> <a href="ch2.html">第二章</a></li><li> <a href="ch3.html">第三章</a></li><li> <a href="ch4.html">第四章</a></li><li> <a href="ch5.html">第五章</a></li><li> <a href="ch6.html">第六章</a></li><li> <a href="ch7.html">第七章</a></li><li> <a href="ch8.html">第八章</a></li><li> <a href="ch9.html">第九章</a></li><li> <a href="ch10.html">第十章</a></li><li> <a href="ch11.html">第十一章</a></li><li> <a href="ch12.html">第十二章</a></li><li> <a href="ch13.html">第十三章</a></li><li> <a href="ch14.html">第十四章</a></li><li> <a href="ch15.html">第十五章</a></li><li> <a href="ch16.html">第十六章</a></li><li> <a href="ch17.html">第十七章</a></li><li> <a href="ch18.html">第十八章</a></li><li> <a href="ch19.html">第十九章</a></li><li> <a href="ch20.html">第二十章</a></li><li> <a href="ch21.html">第二十一章</a></li><li> <a href="ch22.html">第二十二章</a></li><li> <a href="ch23.html">第二十三章</a></li></ul></div></div><h2 class="text-primary">第二十二章 手风琴效果</h2><h3 class="text-primary">22.1 基本结构</h3><p>最简单的结构就是一个触发器和一个折叠区：</p><div><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器</button><div class="collapse in" id="demo1">折叠区</div></div><pre> &lt;button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器&lt;/button&gt;
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="images/me.jpg"><title>第二十二章 手风琴效果</title><link rel="stylesheet" href="styles/bootstrap.css"><style>body{margin: 20px 0}
+#scrollSpy ul.nav-tabs{
+	margin-top: 20px;
+	border-bottom: none;
+	//- border-radius: 4px;
+	//- border: 1px solid #ddd;
+	//- box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
+#scrollSpy ul.nav-tabs li{
+	margin: 0;
+	//- border-top: 1px solid #ddd;
+}
+#scrollSpy ul.nav-tabs li:first-child{
+	border-top: none;
+}
+#scrollSpy ul.nav-tabs li a{
+	margin: 0;
+	padding: 4px 16px;
+	//- border-radius: 0;
+}
+#scrollSpy ul.nav-tabs li.active a, #scrollSpy ul.nav-tabs li.active a:hover{
+	color: #fff;
+	background: #0088cc;
+	//- border: 1px solid #0088cc;
+}
+#scrollSpy ul.nav-tabs li:first-child a{
+	//- border-radius: 4px 4px 0 0;
+}
+#scrollSpy ul.nav-tabs li:last-child a{
+	//- border-radius: 0 0 4px 4px;
+}
+#scrollSpy ul.nav-tabs{
+	top: 0	; /* Set the top position of pinned element */
+}
+</style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第二十二章 手风琴效果</h2><h3 class="text-primary">22.1 基本结构</h3><p>最简单的结构就是一个触发器和一个折叠区：</p><div><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器</button><div class="collapse in" id="demo1">折叠区</div></div><pre> &lt;button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器&lt;/button&gt;
 &lt;div class="collapse in" id="demo1"&gt;折叠区&lt;/div&gt;	</pre><p>制作触发器时可以用a元素，也可以用button元素，关键是要为其声明属性data-toggle="collapse"和data-target="*"（对应折叠区的选择器）	<br>折叠区需要添加类<code>.collapse</code>如果需要默认为显示状态，还要追加类<code>.in</code></p><div><a class="btn btn-primary" href="#collapse10" role="button" data-toggle="collapse">链接</a><button class="btn btn-primary" type="button" data-target="#collapse20" data-toggle="collapse"> 按钮</button><div class="collapse in well" id="collapse10">链接对应的折叠区</div><div class="collapse well" id="collapse20">按钮对应的折叠区 </div></div><pre>&lt;a class="btn btn-primary" href="#collapse10" role="button" data-toggle="collapse"&gt;链接&lt;/a&gt;
 &lt;button class="btn btn-primary" type="button" data-target="#collapse20" data-toggle="collapse"&gt; 按钮&lt;/button&gt;
 &lt;div class="collapse in well" id="collapse10"&gt;链接对应的折叠区&lt;/div&gt;
@@ -14,4 +48,4 @@
 	})
 .on("hidden.bs.collapse", function(){
 	alert("after hide")
-	})						</script><hr></body></html>
+	})						</script></div></div></div></body></html>

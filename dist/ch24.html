@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="shortcut icon" href="images/me.jpg"><title>第二十四章 固定定位（Affix）</title><link rel="stylesheet" href="styles/bootstrap.css"><style>body{margin: 20px 0}
+#scrollSpy ul.nav-tabs{
+	margin-top: 20px;
+	border-bottom: none;
+	//- border-radius: 4px;
+	//- border: 1px solid #ddd;
+	//- box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
+#scrollSpy ul.nav-tabs li{
+	margin: 0;
+	//- border-top: 1px solid #ddd;
+}
+#scrollSpy ul.nav-tabs li:first-child{
+	border-top: none;
+}
+#scrollSpy ul.nav-tabs li a{
+	margin: 0;
+	padding: 4px 16px;
+	//- border-radius: 0;
+}
+#scrollSpy ul.nav-tabs li.active a, #scrollSpy ul.nav-tabs li.active a:hover{
+	color: #fff;
+	background: #0088cc;
+	//- border: 1px solid #0088cc;
+}
+#scrollSpy ul.nav-tabs li:first-child a{
+	//- border-radius: 4px 4px 0 0;
+}
+#scrollSpy ul.nav-tabs li:last-child a{
+	//- border-radius: 0 0 4px 4px;
+}
+#scrollSpy ul.nav-tabs{
+	top: 0	; /* Set the top position of pinned element */
+}
+</style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第二十四章 固定定位（Affix）</h2><p class="lead">为元素实现固定定位</p><h3 class="text-primary">24.1 实现过程</h3><ol> <li>为元素设置data-spy="affix"属性，表示元素固定不变</li><li>设置data-offset属性，取值整数。如data-offset=90，表示top和bottom分别为90。也可以分别设置data-offset-top和data-offset-bottom：<ul> <li> <strong>data-offset-top</strong>表示当页面从顶部开始滚动，滚动距离大于90px时，affix元素不再滚动，固定在页面。</li><li> <strong>data-offset-bottom</strong>与data-offset-top相反。</li></ul></li></ol><pre>&lt;ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="90" data-offset-bottom="120"&gt;&lt;/ul&gt;</pre></div></div></div></body></html>

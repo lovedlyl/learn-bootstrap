@@ -6,6 +6,7 @@ var gulp = require("gulp"),
     concat = require("gulp-concat"),
     pug = require("gulp-pug"),
     rename = require("gulp-rename"),
+    uglify = require("gulp-uglify"),
     plumber = require("gulp-plumber");
 
 // gulp browser-sync gulp-concat gulp-plumber gulp-pug gulp-rename 
@@ -30,12 +31,21 @@ gulp.task("lib", function() {
         .pipe(gulp.dest("dist/scripts"))
 });
 
-// 将图片导入github.io中
-gulp.task("image", function () {
-    gulp.src("dist/images/*")
-        .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/images"))
-})
-// 将pug文件转换为html文件
+// 自定义脚本
+gulp.task("scripts", function() {
+        gulp.src("src/scripts/*")
+            .pipe(plumber())
+            .pipe(uglify())
+            .pipe(plumber.stop())
+            .pipe(gulp.dest("dist/scripts"))
+            .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/scripts"))
+    })
+    // 将图片导入github.io中
+gulp.task("image", function() {
+        gulp.src("dist/images/*")
+            .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/images"))
+    })
+    // 将pug文件转换为html文件
 gulp.task("convertPug", function() {
     gulp.src("src/!(data|mixin|bootstrap-engin).pug")
         .pipe(plumber())
@@ -51,9 +61,11 @@ gulp.task("convertPug", function() {
 gulp.task("default", function() {
     browserSync.init({
         server: "../lovedlyl.github.io/learn-bootstrap"
-        // server: "dist"
+            // server: "dist"
     });
     gulp.watch("src/*.pug", ["convertPug"]);
     gulp.watch("dist/*.html").on("change", browserSync.reload);
+
+    gulp.watch("src/scripts/*", ["scripts", browserSync.reload])
 
 });

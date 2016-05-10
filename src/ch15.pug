@@ -261,70 +261,69 @@ block content
 	//- 
 	h3.text-primary 15.9 模态弹出框使用（data-参数说明）
 	p 除data-toggle和data-target属性外，还可以通过其它属性实现对弹出框的控制：
-	.container
-		.row 
-			.col-xs-12.col-sm-12.col-md-12.col-lg-12
-				+table2({headers: ["属性名称","类型","默认值","描述", "备注"], responsive: true}).table-bordered.table-hover.table-striped
-					tr 
-						td data-toggle
-						td 字符串
-						td modal 
-						td 用来控制弹出框的显示
-						td 必须定义的一个属性，而且必须是
-							span.text-warning modal 
-							//- span.text-warning	
-					tr
-						td data-target
-						td 字符串
-						td 用户自定义
-						td 用来确定触发时弹出哪个模态框，其值可以是“div.modal”独有的类名或ID名
-						td 必须定义的一个属性，而且必须是“div.modal”上独有的类名或ID名
-					tr 
-						td data-backdrop
-						td 布尔值
-						td true
-						td 是否包含背景div，如果为真，单击该背景时关闭弹窗。如果为
-							span.text-warning static
-							|单击该背景时不会关闭弹窗
-						td
-							.btn-group-vertical
-								button(type="button",data-target="#modal-fade1", data-toggle="modal", data-backdrop="static").btn.btn-primary.btn-block 点击背景不会关闭
-								button(type="button",data-target="#modal-fade2", data-toggle="modal", data-backdrop="false").btn.btn-primary.btn-block 没有遮套层
-					tr 
-						td data-keyboard
-						td 布尔值
-						td true 
-						td 按键盘ESC键是否关闭弹框，如果为false则无法通过ESC键关闭弹窗
-						td 
-							button(type="button",data-target="#modal-fade3", data-toggle="modal", data-keyboard="false").btn.btn-primary 不能用ESC键关闭
-							p.text-danger 测试不能成功，是不是一个页面有多个弹框的原因？
-					tr 
-						td data-show 
-						td 布尔值
-						td true
-						td.text-warning 模态框初始化之后就立即显示出来。???
-						td 
-							button(type="button",data-target="#modal-fade3", data-toggle="modal", data-show=true).btn.btn-primary 没有遮套层
-					tr 
-						td data-remote
-						td URL路径
-						td 空值
-						td 如果提供的是 URL，将利用 jQuery 的 load 方法从此 URL 地址加载要展示的内容（只加载一次）并插入
+	.row 
+		.col-xs-12.col-sm-12.col-md-12.col-lg-12
+			+table2({headers: ["属性名称","类型","默认值","描述", "备注"], responsive: true}).table-bordered.table-hover.table-striped
+				tr 
+					td data-toggle
+					td 字符串
+					td modal 
+					td 用来控制弹出框的显示
+					td 必须定义的一个属性，而且必须是
+						span.text-warning modal 
+						//- span.text-warning	
+				tr
+					td data-target
+					td 字符串
+					td 用户自定义
+					td 用来确定触发时弹出哪个模态框，其值可以是“div.modal”独有的类名或ID名
+					td 必须定义的一个属性，而且必须是“div.modal”上独有的类名或ID名
+				tr 
+					td data-backdrop
+					td 布尔值
+					td true
+					td 是否包含背景div，如果为真，单击该背景时关闭弹窗。如果为
+						span.text-warning static
+						|单击该背景时不会关闭弹窗
+					td
+						.btn-group-vertical
+							button(type="button",data-target="#modal-fade1", data-toggle="modal", data-backdrop="static").btn.btn-primary.btn-block 点击背景不会关闭
+							button(type="button",data-target="#modal-fade2", data-toggle="modal", data-backdrop="false").btn.btn-primary.btn-block 没有遮套层
+				tr 
+					td data-keyboard
+					td 布尔值
+					td true 
+					td 按键盘ESC键是否关闭弹框，如果为false则无法通过ESC键关闭弹窗
+					td 
+						button(type="button",data-target="#modal-fade3", data-toggle="modal", data-keyboard="false").btn.btn-primary 不能用ESC键关闭
+						p.text-danger 测试不能成功，是不是一个页面有多个弹框的原因？
+				tr 
+					td data-show 
+					td 布尔值
+					td true
+					td.text-warning 模态框初始化之后就立即显示出来。???
+					td 
+						button(type="button",data-target="#modal-fade3", data-toggle="modal", data-show=true).btn.btn-primary 没有遮套层
+				tr 
+					td data-remote
+					td URL路径
+					td 空值
+					td 如果提供的是 URL，将利用 jQuery 的 load 方法从此 URL 地址加载要展示的内容（只加载一次）并插入
+						br
+						code .modal-content
+						|内。
+						br
+						|如果使用的是 data 属性 API，还可以利用 href 属性指定内容来源地址
+						br
+						|。下面是一个实例：
+						pre 
+							|&lt;a data-toggle="modal" href="remote.html" 
 							br
-							code .modal-content
-							|内。
-							br
-							|如果使用的是 data 属性 API，还可以利用 href 属性指定内容来源地址
-							br
-							|。下面是一个实例：
-							pre 
-								|&lt;a data-toggle="modal" href="remote.html" 
-								br
-								|data-target="#modal"&gt;Click me&lt;/a&gt;				
-							p.text-warning 将在V4中废除，到时可以自己用jQuery实现。
-						td 
-							button#modal10(type="button",data-target="#modal-fade10", data-toggle="modal", data-remote="modal.html").btn.btn-primary 外来弹框			
-							p.text-warning 暂时没有验证
+							|data-target="#modal"&gt;Click me&lt;/a&gt;				
+						p.text-warning 将在V4中废除，到时可以自己用jQuery实现。
+					td 
+						button#modal10(type="button",data-target="#modal-fade10", data-toggle="modal", data-remote="modal.html").btn.btn-primary 外来弹框			
+						p.text-warning 暂时没有验证
 
 	//- 
 	h3.text-primary 15.10 JS触发弹框
@@ -380,7 +379,7 @@ block content
 			td
 
 	//- 
-	h3.text-primary 15.10 JS触发时其它参数设置
+	h3.text-primary 15.11 JS触发时其它参数设置
 	p 
 		strong 参数设置：
 		|bootstrap还为模态弹框提供了另外3种参数（好像不可以和上一节的参数混用）

@@ -18,34 +18,34 @@ block content
 		li 轮播图片计数器
 		li 轮播图片控制器
 	p 每个轮播图还可以包括标题和描述内容。
-	.container
-		.row 
-			.col-xs-5.col-sm-5.col-md-5.col-lg-5
-				#slider.carousel.slide(data-ride="carousel")
-					ol.carousel-indicators
-						li.active(data-target="#slider", data-slide-to="0")
-						li(data-target="#slider", data-slide-to="1") 
-						li(data-target="#slider", data-slide-to="2") 
-					.carousel-inner
-						.item.active 
-							img(src="images/1.jpg")
-							.carousel-caption
-								h4 标题
-								p 描述内容
-						.item
-							img(src="images/2.jpg")
-							.carousel-caption
-								h4 标题
-								p 描述内容					
-						.item
-							img(src="images/3.jpg")
-							.carousel-caption
-								h4 标题
-								p 描述内容
-					a(href="#slider", role="button", data-slide="prev").left.carousel-control
-						span.icon-prev
-					a(href="#slider", rol="button", data-slide="next").right.carousel-control
-						span.icon-next
+	//- .container
+	//- 	.row 
+	//- 		.col-xs-5.col-sm-5.col-md-5.col-lg-5
+	#slider.carousel.slide(data-ride="carousel")
+		ol.carousel-indicators
+			li.active(data-target="#slider", data-slide-to="0")
+			li(data-target="#slider", data-slide-to="1") 
+			li(data-target="#slider", data-slide-to="2") 
+		.carousel-inner
+			.item.active 
+				img(src="images/1.jpg")
+				.carousel-caption
+					h4 标题
+					p 描述内容
+			.item
+				img(src="images/2.jpg")
+				.carousel-caption
+					h4 标题
+					p 描述内容					
+			.item
+				img(src="images/3.jpg")
+				.carousel-caption
+					h4 标题
+					p 描述内容
+		a(href="#slider", role="button", data-slide="prev").left.carousel-control
+			span.icon-prev
+		a(href="#slider", rol="button", data-slide="next").right.carousel-control
+			span.icon-next
 
 	//- 
 	h3.text-primary 23.1 实现过程
