@@ -39,7 +39,7 @@ $(function() {
 
     // 翻页导航
     (function() {
-        var start = 2;
+        var start = 1;
         var end = 24;
         var here;
         var chapter = window.location.pathname.match(/\d+/);

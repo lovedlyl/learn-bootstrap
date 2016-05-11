@@ -31,7 +31,9 @@ block content
 			code .row 
 			|必须包含在容器
 			code .container
-			|中，以便为其赋予对齐方式和内边距。如：
+			|（固定宽度）或
+			code .container-fluid
+			|（100%宽度）中，以便为其赋予对齐方式和内边距。如：
 			pre 
 				|&lt;div class="container"&gt;
 				|	&lt;div class="row"&gt;&lt;/div&gt;
@@ -153,3 +155,73 @@ block content
 			.row.this-page
 				each i in [1,2,3]
 					.col-xs-4.col-sm-4.col-md-4.col-lg-4 我是内层列，我占4列
+
+	//- 
+	h3.text-primary 7.6 栅格参数
+	+table2({headers:["","超小屏幕 手机 (<768px)", "小屏幕 平板 (≥768px)", "中等屏幕 桌面显示器 (≥992px)", "大屏幕 大桌面显示器 (≥1200px)"], responsive: true}).table-bordered
+		tr 
+			td 栅格系统行为
+			td 总是水平排列
+			td(colspan=3) 开始是堆叠在一起的，当大于这些阈值时将变为水平排列
+		tr 
+			td 
+				code .container
+				|最大宽度
+			td 自动
+			td 750px
+			td 970px
+			td 1170px
+		tr 
+			td 前缀
+			td 
+				code .col-xs- 
+			td 
+				code .col-sm-
+			td
+				code .col-md-
+			td
+				code .col-lg-
+		tr 
+			td 列数
+			td(colspan=4) 12
+		tr 
+			td 列宽
+			td 62px
+			td 81px
+			td 97px
+		tr 
+			td 槽（gutter）宽
+			td(colspan=4) 30px（左右各为15px）
+
+	//- 
+	h3.text-primary 7.7 多余列的处理
+	p 如果
+		code .row 
+		|内列数超过12，多余的列将另起一行显示
+	.row.this-page
+		.col-xs-9.col-sm-9.col-md-9.col-lg-9 col-9
+		.col-xs-4.col-sm-4.col-md-4.col-lg-4 col-4
+		.col-xs-6.col-sm-6.col-md-6.col-lg-6 col.6
+
+	h3.text-primary 7.8 响应式列重置
+	p 当某些列可能会出现比别的列高的情况。为了克服这一问题，建议联合使用 .clearfix 和 响应式工具类：
+	.row.this-page
+		.col-xs-6.col-sm-3 .col-xs-6 .col-sm-3 缩小视窗查看效果 缩小视窗查看效果 缩小视窗查看效果 缩小视窗查看效果
+		.col-xs-6.col-sm-3 .col-xs-6 .col-sm-3
+		.clearfix.visible-xs-block
+		.col-xs-6.col-sm-3 .col-xs-6 .col-sm-3
+		.col-xs-6.col-sm-3 .col-xs-6 .col-sm-3
+	br 
+
+	pre 
+		|&lt;div class="row this-page"&gt;
+		|    &lt;div class="col-xs-6 col-sm-3"&gt;.col-xs-6 .col-sm-3 缩小视窗查看效果 缩小视窗查看效果 缩小视窗查看效果 缩小视窗查看效果&lt;/div&gt;
+		|    &lt;div class="col-xs-6 col-sm-3"&gt;.col-xs-6 .col-sm-3&lt;/div&gt;
+		|    &lt;div class="col-xs-6 col-sm-3"&gt;.col-xs-6 .col-sm-3&lt;/div&gt;
+		|    &lt;div class="col-xs-6 col-sm-3"&gt;.col-xs-6 .col-sm-3 &lt;/div&gt;
+		|&lt;/div&gt;	
+	
+	<div class="row this-page">
+	<div class="col-sm-5 col-md-6">.col-sm-5 .col-md-6</div>
+	<div class="col-sm-5 col-sm-offset-2 col-md-6 col-md-offset-0">.col-sm-5 .col-sm-offset-2 .col-md-6 .col-md-offset-0</div>
+	</div>

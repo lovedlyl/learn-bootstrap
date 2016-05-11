@@ -192,35 +192,35 @@ mixin table2(options)
 					block 
 
 
-mixin table(options)
-	-var cat = "table"
-	if (options.bordered)
-		-cat += " table-bordered"
-	if (options.hover)
-		-cat += " table-hover"
-	if (options.striped)
-		-cat += " table-striped"
-	if (options.condensed)
-		-cat += " table-condensed"
-	if (options.responsive)
-		.table-responsive
-			table(class=cat)
-				thead
-					tr 
-						each head in options.headers 
-							td= head 
-				if block
-					tbody 
-						block  
-	else
-		table(class=cat)
-			thead
-				tr 
-					each head in options.headers 
-						td= head 
-			if block
-				tbody 
-					block 	
+//- mixin table(options)
+//- 	-var cat = "table"
+//- 	if (options.bordered)
+//- 		-cat += " table-bordered"
+//- 	if (options.hover)
+//- 		-cat += " table-hover"
+//- 	if (options.striped)
+//- 		-cat += " table-striped"
+//- 	if (options.condensed)
+//- 		-cat += " table-condensed"
+//- 	if (options.responsive)
+//- 		.table-responsive
+//- 			table(class=cat)
+//- 				thead
+//- 					tr 
+//- 						each head in options.headers 
+//- 							td= head 
+//- 				if block
+//- 					tbody 
+//- 						block  
+//- 	else
+//- 		table(class=cat)
+//- 			thead
+//- 				tr 
+//- 					each head in options.headers 
+//- 						td= head 
+//- 			if block
+//- 				tbody 
+//- 					block 	
 
 
 mixin X(dismiss)

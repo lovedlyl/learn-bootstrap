@@ -66,9 +66,9 @@ block content
 		|常用在网站中的产品展示区域，一行显示多张图片，有的图片周围还有描述信息等。
 	p 
 		strong 基本结构：
-		kbd .row > .col-?-? > a
+		kbd .row > .col-?-? > 
 			code .thumbnail
-			|[href=?] > img 
+			|> (a [href=?] > img) 
 	p 
 		strong 注意：
 		|要与网格结构结合使用：
@@ -88,9 +88,10 @@ block content
 			each i in [1,2,3,4]
 				.col-xs-3.col-sm-3.col-md-3.col-lg-3
 					.thumbnail
-						img(src="images/bootstrap.png", alt="").img-responsive
+						a(href="#")
+							img(src="images/bootstrap.png", alt="").img-responsive
 						.caption
-							h3 bootstrap学习笔记
+							h4 bootstrap学习笔记
 							p 这个笔记不是完善，以后再慢慢改进
 							p
 								a(href="#").btn.btn-primary 已经学习

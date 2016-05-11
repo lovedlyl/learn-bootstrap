@@ -4,6 +4,7 @@ block title
 	title 第二章 排版
 block content
 	include mixin
+	include bootstrap-engin
 
 	h2.text-primary 第二章 排版
 	
@@ -71,6 +72,67 @@ block content
 	p 我是一段普通的文字
 	p.lead 我是一段突出显示的文字
 	p 此外，还可通过&lt;small&gt;,&lt;strong&gt;, &lt;em&gt;, &lt;cite&gt;标签突出文本
+	p 
+		strong 其它：
+	ul
+		li 高亮文本使用&lt;mark&gt;标签：
+			mark 高亮
+			|长这样。
+		li 被删除的文本使用&lt;del&gt;标签：
+			del 我是被删除的文本
+		li 无用文本使用&lt;s&gt;标签：
+			s 我没用！！
+		li 插入的文本使用&lt;ins&gt;标签：
+			ins 我是被插入的文本
+		li 带下划线的文本使用&lt;u&gt;标签：
+			u 我有下划线喔
+		li 小号文本可以使用&lt;small&gt;标签也可以为标签添加类
+			code .small
+			|实现：
+			small 我用的是&lt;small&gt;标签
+			p.small 我是一段话，用的是
+				code .small
+				|类
+		li 改变文本大小写可以使用类
+			code .text-lowercase
+			|，
+			code .text-uppercase
+			|和
+			code .text-capitalize
+			|：
+			p some text
+			p.text-lowercase some text 
+			p.text-uppercase some text
+			p.text-capitalize some text
+		li 缩略语使用&lt;abbr&gt;标签，并且声明title属性，如果需要标签字体小些，还可添加类
+			code .initialism
+			|：
+			p 这是一个
+				abbr(title="标签") 标签
+				|和一个
+				abbr(title="小标签").initialism 小标签
+		li 地址使用&lt;address&gt;标签，其中的换行使用&lt;br&gt;标签：
+			address 
+				strong 地址：
+				br 
+				|四川，中国
+			address
+				strong 邮箱：
+				a(href="mailto:#") lovedlyl@163.com
+		li 引用是将&lt;p&gt;标签包裹在&lt;blockquote&gt;标签内，如果需要注明来源，可以在&lt;footer&gt;标签内包裹&lt;cite&gt;标签，其中的换行使用
+			|需要引用位置在右边，可以为&lt;blockquote&gt;标签也可以为标签添加类
+			code .blockquote-reverse
+			|：
+			kbd blockquote.blockquote-reverse > p + (footer > cite) 
+			blockquote
+				p 老吾老以及人之老，幼吾幼以及人之幼。
+				footer 
+					cite(title="孔子") 孔子
+			blockquote.blockquote-reverse
+				p 老吾老以及人之老，幼吾幼以及人之幼。
+				footer 
+					cite(title="孔子") 孔子
+
 
 	//- 
 	h3.text-primary 2.5 粗体
@@ -214,7 +276,7 @@ block content
 		dd 上海号称东方巴黎
 
 	//- 
-	h3 2.14 列表-水平定义列表
+	h3.text-primary 2.14 列表-水平定义列表
 	p 
 		|实现类：
 		code .dl-horizontal
@@ -261,6 +323,7 @@ block content
 		code ctrl+v
 		|粘贴代码
 
+
 	h3.text-primary 2.16 代码2
 	p 
 		|使用pre风格时，如果代码过长，可添加类
@@ -270,7 +333,13 @@ block content
 		-var i = 0
 		while (i < 10)
 			li= i++
-
+	p 变量使用&lt;var&gt;标签：
+		var x 
+		|=
+		|1 + 1
+	p 输出内容使用&lt;samp&gt;标签：
+	p 运行结果为：
+		samp >>32
 	//- 
 	h3.text-primary 2.17 表格
 	p bootstrap为表格提供了1种基础样式，4种附加样式，和1种响应式样式，对应的类为：
@@ -405,3 +474,173 @@ block content
 		["", "表格单元格", "表格单元格", "表格单元格"],
 		["", "表格单元格", "表格单元格", "表格单元格"],
 		["", "表格单元格", "表格单元格", "表格单元格"]])
+
+	//- 
+	h3.text-primary 2.25 页头
+	p 如果需要为h1增加额外的空间，可以将其包裹在
+		code .page-header
+		|内：
+	.page-header
+		h1 这是一级标题
+			small 这是副标题
+	pre 
+		|&lt;div class="page-header"&gt;
+		|	&lt;h1&gt;这是一级标题&lt;small&gt;副标题&lt;/small&gt;&lt;/h1&gt;
+		|&lt;/div&gt;
+
+	//-
+	h3.text-primary 2.26 巨幕
+	p 
+		strong 作用：
+		|使元素充满整个可视区，显示页面关键内容
+	.jumbotron
+		h1 一级标题
+		p 描述内容
+		button(type="button").btn.btn-primary 更多...
+	pre  
+		|&lt;div class="jumbotron"&gt;
+		|	&lt;h1&gt;一级标题&lt;/h1&gt;
+		|	&lt;p&gt;描述内容&lt;/p&gt;
+		|	&lt;button class="btn btn-primary"&gt;更多...&lt;/button&gt;
+		|&lt;/div&gt;	
+	p 如果需要此组件与浏览器等宽，可以将其放置在
+		code .container
+		|外，并在自己内部添加类
+		code .container
+		|： 
+	pre
+		|&lt;div class="jumbotron"&gt;
+		|	&lt;div class="container-"&gt;
+		|		&lt;h1&gt;一级标题&lt;/h1&gt;
+		|		&lt;p&gt;描述内容&lt;/p&gt;
+		|		&lt;button class="btn btn-primary"&gt;更多...&lt;/button&gt;
+		|	&lt;/div&gt;
+		|&lt;/div&gt;	
+
+	//- 
+	h3.text-primary 2.27 well
+	p 用
+		code .well
+		|包裹元素，使其有嵌入（inset）的效果：
+	.well 嵌入在.wel内
+	pre &lt;div class="well"&gt;嵌入在.wel内&lt;/div&gt;
+	p 还可以追加类
+		code .well-sm
+		|和
+		code .well-lg
+		|控制组件大小：
+	.well.well-sm 嵌入在.wel内（小） 
+	.well.well-lg 嵌入在.wel内（大）
+
+	//- 
+	h3.text-primary 2.28 背景色
+	+table2({headers: ["类", "效果"] }).table-bordered
+		tr
+			td 
+				code .bg-primary
+			td.bg-primary .bg-primary 
+		tr
+			td 
+				code .bg-success
+			td.bg-success .bg-success 
+		tr
+			td 
+				code .bg-info
+			td.bg-info .bg-info 
+		tr
+			td 
+				code .bg-warning
+			td.bg-warning .bg-warning
+		tr
+			td 
+				code .bg-danger
+			td.bg-danger .bg-danger 
+		tr 
+			td(colspan=2).text-warning 有时设置会失效，这时可以在元素外层嵌套&lt;div&gt;并添加相应的类 			 			
+
+	
+	//-
+	h3.text-primary 2.29 浮动
+	p 
+		strong 暴力浮动：
+		code .pull-left
+		|和
+		code .pull-right
+	p.text-warning 不能用在导航条组件中，导航条有对应的浮动方式：
+		code .navbar-left
+		|和
+		code .navbar-right
+	p 
+		strong 清除浮动：
+		code .clearfix
+
+	h3.text-primary 2.30 显示和隐藏
+	p 
+		code .hidden
+		|，
+		code .show
+		|，
+		code .sr-only
+		|和
+		code .invisible
+		|都可控制元素显示和隐藏，其中：
+	ul 
+		li 
+			code .sr-only
+			|是指只对屏幕阅读器起作用。
+		li
+			code .invisible
+			|的效果是，虽然元素不可见，但仍占据文档流，影响布局。
+			pre 
+				|.invisible{
+				|	visibility: hidden
+				|}
+	p 
+		strong 图片替换：
+		|可以用类
+		code .text-hide
+		|或mixin实现
+	pre &lt;div class="text-hide"&gt;logo 标题&lt;/div&gt;
+	pre
+		|.heading {
+		|	.text-hide();
+		|}
+	p.text-hide 标题
+
+	p 
+		strong 响应式显示：
+	+table2({headers:["类组", "CSS display"]}).table-bordered
+		tr
+			td 
+				code .visible-*-block
+			td display: block 
+		tr
+			td 
+				code .visible-*-inline-block
+			td display: inline-block 
+		tr
+			td 
+				code .visible-*-inline
+			td display: inline 
+
+	p 
+		strong 响应式隐藏：
+		ul.list-group
+			each item in ["hiden-xs", "hidden-sm", "hidden-md", "hidden-lg"]
+				li.list-group-item 
+					code #{"." + item}
+
+	//- 
+	h3.text-primary 2.31 水平居中和尺寸助手
+	p 
+		strong 水平居中:
+		|设置width或max-width, 使用类
+		code .center-block
+		|或使用mixin .center-block
+
+	p 
+		strong 尺寸助手：
+		|为了方便设置尺寸可以调用.size和.square两个mixin
+		pre
+			|.image { .size(400px; 300px); }
+			|.avatar { .square(48px); }			
