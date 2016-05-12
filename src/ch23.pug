@@ -118,7 +118,42 @@ block content
 				|	&lt;/div&gt;
 				|	&lt;a href="#" class="carousel-control left"&gt;&lt;span class="icon-prev"&gt;&lt;/span&gt;&lt;/a&gt;
 				|	&lt;a href="#" class="carousel-control left"&gt;&lt;span class="icon-next"&gt;&lt;/span&gt;&lt;/a&gt;
-				|&lt;/div&gt;				
+				|&lt;/div&gt;
+		li.text-warning 
+			p
+				strong 控制轮播的高度:
+				|需要同时设置
+				code .carousel
+				|和
+				code .carousel-item
+				|的高度为一样。并且还要设置图片宽度为100%。
+			pre
+				|.carousel, .carousel .item{
+				|	height: 500px;
+				|	bacground-color: #000;
+				|}
+				|.carousel img{
+				|	width: 100%;
+				|}
+			p
+				strong 响应式更改：
+				|当屏幕缩小时，为防止图片不能填满整个容器，还需要响应式修改：
+			pre
+				|@media(max-width: 768px){
+				|	.carousel{
+				|			margin-bottom: 30px;
+				|	}
+				|	.carousel, .carousel .item{
+				|		height: 300px;
+				|		bacground-color: #000;
+				|	}
+				|	.carousel img{
+				|		min-height: 300px;
+				|	}	
+				|	.carousel .carousel-caption p{
+				|		font-size: 16px;
+				|		line-height: 1.4;
+				|	}														
 
 	//- 
 	h3.text-primary 23.2 data-属性触发

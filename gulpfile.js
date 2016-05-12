@@ -14,7 +14,7 @@ var gulp = require("gulp"),
 gulp.task("lib", function() {
     // 样式
     gulp.src(["bower_components/bootstrap/dist/css/bootstrap.min.css"])
-        .pipe(concat("bootstrap.css"))
+        // .pipe(concat("bootstrap.css"))
         .pipe(gulp.dest("../lovedlyl.github.io/learn-bootstrap/styles"))
         .pipe(gulp.dest("dist/styles"));
     // 字体文件

@@ -48,8 +48,13 @@ block content
 				|和
 				code .navbar-default
 	.navbar.navbar-default
-		ul.nav.navbar-nav
-			+items()
+		.container
+			ul.nav.navbar-nav
+				+items()
+	p.text-warning 如果需要导航条内容居中，可以将内容包裹在
+		code .container
+		|内：
+		kbd .navbar.navbar-default > .container > .... 
 
 	h3.text-primary 9.3 导航条标题，二级菜单及状态
 	p 

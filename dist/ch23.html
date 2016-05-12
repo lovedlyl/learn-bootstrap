@@ -65,7 +65,27 @@
 	&lt;/div&gt;
 	&lt;a href="#" class="carousel-control left"&gt;&lt;span class="icon-prev"&gt;&lt;/span&gt;&lt;/a&gt;
 	&lt;a href="#" class="carousel-control left"&gt;&lt;span class="icon-next"&gt;&lt;/span&gt;&lt;/a&gt;
-&lt;/div&gt;				</pre></li></ol><h3 class="text-primary">23.2 data-属性触发</h3><p>上一节只是实现了轮播图片的基本结构，如果要通过属性触发，还要：</p><ol> <li>为<code>.carousel</code>添加属性data-ride="carousel"。如果需要图片切换更平滑，还可追加类<code>.slide</code></li><li>计数控制器上的li元素添加属性data-target=".carousel的ID值"，以及data-slide-to属性，取值自身在ol的索引，基数为0。</li><li>a元素控制器的href设置为".carousel的ID值"，data-slide属性设置为"next"或"prev"，分别代表向前和向后。</li></ol><pre> &lt;div id="slidershow" class="carousel slide" data-ride="carsouel"&gt;
+&lt;/div&gt;</pre></li><li class="text-warning"> <p><strong>控制轮播的高度:</strong>需要同时设置<code>.carousel</code>和<code>.carousel-item</code>的高度为一样。并且还要设置图片宽度为100%。</p><pre>.carousel, .carousel .item{
+	height: 500px;
+	bacground-color: #000;
+}
+.carousel img{
+	width: 100%;
+}</pre><p><strong>响应式更改：</strong>当屏幕缩小时，为防止图片不能填满整个容器，还需要响应式修改：</p><pre>@media(max-width: 768px){
+	.carousel{
+			margin-bottom: 30px;
+	}
+	.carousel, .carousel .item{
+		height: 300px;
+		bacground-color: #000;
+	}
+	.carousel img{
+		min-height: 300px;
+	}	
+	.carousel .carousel-caption p{
+		font-size: 16px;
+		line-height: 1.4;
+	}														</pre></li></ol><h3 class="text-primary">23.2 data-属性触发</h3><p>上一节只是实现了轮播图片的基本结构，如果要通过属性触发，还要：</p><ol> <li>为<code>.carousel</code>添加属性data-ride="carousel"。如果需要图片切换更平滑，还可追加类<code>.slide</code></li><li>计数控制器上的li元素添加属性data-target=".carousel的ID值"，以及data-slide-to属性，取值自身在ol的索引，基数为0。</li><li>a元素控制器的href设置为".carousel的ID值"，data-slide属性设置为"next"或"prev"，分别代表向前和向后。</li></ol><pre> &lt;div id="slidershow" class="carousel slide" data-ride="carsouel"&gt;
 	&lt;ol class="carousel-indicatiors"&gt;
 		&lt;li data-target="#slideshow" data-slide-to="0"&gt;&lt;/li&gt;
 		&lt;li data-target="#slideshow" data-slide-to="0"&gt;&lt;/li&gt;
