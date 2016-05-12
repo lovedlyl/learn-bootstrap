@@ -19,6 +19,14 @@ block content
 
 	//- 
 	h3.text-primary 8.1 基础样式
+	p.text-warning 在小型设备上，一行内可能不能放下所有项目，有换行的危险，不是很美观，可以进行响应式修复：
+	pre
+		|@media(max-width: 768px){
+		|	.nav li a{
+		|		padding-left: 6px;
+		|		padding-right: 6px;
+		|	}
+		|}
 	p bootstrap实现导航效果主要通过类
 		code .nav 
 		|，不过仅有它不提供默认的导航样式，还要添加类
